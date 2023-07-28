@@ -1,0 +1,29 @@
+[build-system]
+requires = ['setuptools', 'setuptools-scm', 'wheel']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'parallelism'
+description = 'Empowering workflows with parallelism'
+readme = 'README.md'
+license = {text = 'MIT'}
+authors = [{name = 'Idan Hazan'}]
+keywords= ['parallelism', 'parallel', 'task', 'scheduler']
+classifiers = [
+    'Programming Language :: Python :: 3',
+    Intended Audience :: Developers,
+    'License :: OSI Approved :: MIT License',
+]
+requires-python = '>= 3.11'
+dynamic = ['version']
+
+[project.urls]
+homepage = 'https://github.com/idanhazan/parallelism'
+repository = 'https://github.com/idanhazan/parallelism'
+documentation = 'https://parallelism.readthedocs.io'
+
+[tool.setuptools]
+packages = ['parallelism']
+
+[tool.setuptools.dynamic.version]
+attr = 'parallelism.__version__'
