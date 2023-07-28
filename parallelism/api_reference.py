@@ -19,9 +19,6 @@ if TYPE_CHECKING:
 __all__ = ('scheduled_task', 'task_scheduler')
 
 
-Union[List[ScheduledTask], Set[ScheduledTask], Tuple[ScheduledTask, ...]]
-
-
 def scheduled_task(
     executor: Type[Union[Process, Thread]],
     name: str,
