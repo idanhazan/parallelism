@@ -38,25 +38,25 @@ def scheduled_task(
     Parameters
     ----------
     executor : {multiprocessing.Process, threading.Thread}
-        The execution unit of a task
+        | The execution unit of a task
     name : str
-        A unique identifier representing a task
+        | A unique identifier representing a task
     target : callable
-        A function to be invoked by a task scheduler
+        | A function to be invoked by a task scheduler
     args : tuple, optional
-        Positional arguments that are related to the target
+        | Positional arguments that are related to the target
     kwargs : dict, optional
-        Keyword arguments that are related to the target
+        | Keyword arguments that are related to the target
     dependencies : tuple of ScheduledTask, optional
-        Certain tasks that create dependencies for the current task
+        | Certain tasks that create dependencies for the current task
     priority : int or float, optional
-        Priority level of task execution over others
+        | Priority level of task execution over others
     processes : int, default 0
-        The number of processes will be allocated retrospectively at runtime
+        | The number of processes will be allocated retrospectively at runtime
     threads : int, default 0
-        The number of threads will be allocated retrospectively at runtime
+        | The number of threads will be allocated retrospectively at runtime
     continual : bool, default False
-        An indicator to save the result after the task scheduler
+        | An indicator to save the result after the task scheduler
     """
     if args is None:
         args = ()
@@ -136,11 +136,11 @@ def task_scheduler(
     Parameters
     ----------
     tasks : tuple of ScheduledTask
-        Tasks that need to be performed
+        | Tasks that need to be performed
     processes : int, optional
-        The number of processes assigned to perform the tasks
+        | The number of processes assigned to perform the tasks
     threads : int, optional
-        The number of threads assigned to perform the tasks
+        | The number of threads assigned to perform the tasks
     """
     if processes is None:
         processes = processes or cpu_count() or 1
