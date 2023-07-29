@@ -41,4 +41,4 @@ API reference
     :caption: API reference
     :glob: -index.rst -conf.py api_reference/*.html
     :hidden:
-    :maxdepth: 0
+    :maxdepth: 2
