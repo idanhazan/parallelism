@@ -96,7 +96,7 @@ class TaskScheduler:
         while not self.finished:
             for index, task in enumerate(self.tasks):
                 if task.initialized:
-                    self.shared_memory_handler.free(task)
+                    self.shared_memory_handler.free(index, task)
                     continue
                 if not self.available_worker(task):
                     continue
@@ -112,8 +112,8 @@ class TaskScheduler:
                 self.tasks[index] = task
                 task.executor.start()
                 break
-        for task in self.tasks:
-            self.shared_memory_handler.free(task)
+        for index, task in enumerate(self.tasks):
+            self.shared_memory_handler.free(index, task)
         self.manager.shutdown()
         return SchedulerResult(
             self.shared_memory_handler.elapsed_time,

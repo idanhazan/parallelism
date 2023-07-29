@@ -31,20 +31,20 @@ class DependencyHandler:
         task: ScheduledTask,
         status: Literal['finish', 'complete'],
     ) -> bool:
-        task_names = tuple(task.name for task in self.depends_on(task))
-        return len(task_names) != sum(
+        tasks = tuple(task for task in self.depends_on(task))
+        return len(tasks) != sum(
             task.initialized and
             self.proxy.get(task.name).get(status)
             for task in self.tasks
-            if task.name in task_names
+            if task in tasks
         )
 
     def blocking_tasks(self, task: ScheduledTask) -> Tuple[str, ...]:
-        task_names = tuple(task.name for task in self.depends_on(task))
+        tasks = tuple(task for task in self.depends_on(task))
         return tuple(
             task.name for task in self.tasks
             if (
-                task.name in task_names and
+                task in tasks and
                 task.initialized and not
                 self.proxy.get(task.name).get('complete')
             )

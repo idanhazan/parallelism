@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from parallelism.core.scheduled_task import ScheduledTask
 
 if TYPE_CHECKING:
     from multiprocessing.managers import DictProxy
     from typing import Dict, List, Tuple
-
-    from parallelism.core.scheduled_task import ScheduledTask
 
 __all__ = ('SharedMemoryHandler',)
 
@@ -34,7 +33,7 @@ class SharedMemoryHandler:
         self.error_handler = {}
         self.return_value = {}
 
-    def free(self, task: ScheduledTask) -> None:
+    def free(self, index: int, task: ScheduledTask) -> None:
         proxy = self.proxy.get(task.name)
         if (
             proxy.get('finish') and
@@ -47,6 +46,19 @@ class SharedMemoryHandler:
                 self.error_handler[task.name] = proxy.get('error_handler')
             elif task.continual:
                 self.return_value[task.name] = proxy.get('return_value')
+            self.tasks[index] = ScheduledTask(
+                executor=task.executor.__class__.__base__,
+                name=task.name,
+                target=task.target,
+                args=(),
+                kwargs={},
+                dependencies=task.dependencies,
+                priority=task.priority,
+                processes=task.processes,
+                threads=task.threads,
+                continual=task.continual,
+                initialized=task.initialized,
+            )
             del self.proxy[task.name]['elapsed_time']
             del self.proxy[task.name]['error_handler']
             del self.proxy[task.name]['return_value']
@@ -61,8 +73,8 @@ class SharedMemoryHandler:
 
     def prerequisites_been_initialized(self, task: ScheduledTask) -> bool:
         task_prerequisites = self.prerequisites.get(task.name)
-        task_names = tuple(task.name for task in task_prerequisites)
+        tasks = tuple(task for task in task_prerequisites)
         return all(
             task.initialized for task in self.tasks
-            if task.name in task_names
+            if task in tasks
         )

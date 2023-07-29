@@ -33,6 +33,9 @@ class ScheduledTask(NamedTuple):
     def __hash__(self) -> int:
         return hash(self.name)
 
+    def __eq__(self, other: ScheduledTask) -> bool:
+        return type(self) is type(other) and self.name == other.name
+
     def __repr__(self) -> str:
         parameters = (
             'executor={!r}'.format(self.reformat_executor),

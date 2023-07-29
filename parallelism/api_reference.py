@@ -37,7 +37,7 @@ def scheduled_task(
 
     Parameters
     ----------
-    executor : {multiprocessing.Process, threading.Thread}
+    executor : multiprocessing.Process or threading.Thread
         | The execution unit of a task
     name : str
         | A unique identifier representing a task
