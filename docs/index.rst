@@ -39,7 +39,7 @@ API reference
 
 .. toctree::
     :caption: API reference
-    :glob:
+    :glob: -index.rst -conf.py
     :hidden:
     :maxdepth: 0
 
