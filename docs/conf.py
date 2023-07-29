@@ -11,9 +11,10 @@ copyright = f'2023, {author}'
 html_theme = 'sphinx_rtd_theme'
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'sphinxcontrib.napoleon',
+    # 'sphinxcontrib.napoleon',
     # 'sphinx_autodoc_typehints',
 ]
-napoleon_numpy_docstring = True
+# napoleon_numpy_docstring = True
 # autodoc_typehints = 'description'
