@@ -29,10 +29,17 @@ Installation
 
     pip install parallelism
 
+API Reference
+-------------
+
+- `scheduled_task <https://parallelism.readthedocs.io/en/latest/api_reference/scheduled_task.html>`_
+- `task_scheduler <https://parallelism.readthedocs.io/en/latest/api_reference/task_scheduler.html>`_
+
 .. Hidden TOCs
 
 .. toctree::
     :hidden:
-    :glob:
-    
-    api_reference/index
+    :caption: API Reference
+    :maxdepth: 0
+        
+    api_reference/*
