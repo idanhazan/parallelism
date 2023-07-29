@@ -13,8 +13,5 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    # 'sphinxcontrib.napoleon',
-    # 'sphinx_autodoc_typehints',
 ]
-# napoleon_numpy_docstring = True
-# autodoc_typehints = 'description'
+autodoc_typehints = 'description'
