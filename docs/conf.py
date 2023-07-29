@@ -12,6 +12,8 @@ html_theme = 'sphinx_rtd_theme'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
-    'sphinx_autodoc_typehints',
+    'sphinxcontrib.napoleon',
+    # 'sphinx_autodoc_typehints',
 ]
-autodoc_typehints = 'description'
+napoleon_numpy_docstring = True
+# autodoc_typehints = 'description'
