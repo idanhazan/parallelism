@@ -32,6 +32,32 @@ def scheduled_task(
     threads: int = 0,
     continual: bool = False,
 ) -> ScheduledTask:
+    """
+    Schedule a task to be executed at the right moment in the task scheduler
+
+    Parameters
+    ----------
+    executor : {multiprocessing.Process, threading.Thread}
+        The execution unit of a task
+    name : str
+        A unique identifier representing a task
+    target : callable
+        A function to be invoked by a task scheduler
+    args : tuple, optional
+        Positional arguments that are related to the target
+    kwargs : dict, optional
+        Keyword arguments that are related to the target
+    dependencies : tuple of ScheduledTask, optional
+        Certain tasks that create dependencies for the current task
+    priority : int or float, optional
+        Priority level of task execution over others
+    processes : int, default 0
+        The number of processes will be allocated retrospectively at runtime
+    threads : int, default 0
+        The number of threads will be allocated retrospectively at runtime
+    continual : bool, default False
+        An indicator to save the result after the task scheduler
+    """
     if args is None:
         args = ()
     if kwargs is None:
@@ -104,6 +130,18 @@ def task_scheduler(
     processes: int = None,
     threads: int = None,
 ) -> SchedulerResult:
+    """
+    Schedule multiple tasks for execution
+
+    Parameters
+    ----------
+    tasks : tuple of ScheduledTask
+        Tasks that need to be performed
+    processes : int, optional
+        The number of processes assigned to perform the tasks
+    threads : int, optional
+        The number of threads assigned to perform the tasks
+    """
     if processes is None:
         processes = processes or cpu_count() or 1
     if threads is None:
@@ -123,8 +161,14 @@ def task_scheduler(
     if not isinstance(processes, int):
         pattern = 'The {!r} parameter should be of type {!r}'
         raise TypeError(pattern.format('processes', 'int'))
+    if processes < 0:
+        pattern = 'The {!r} parameter should be an integer >= {!r}'
+        raise TypeError(pattern.format('processes', 0))
     if not isinstance(threads, int):
         pattern = 'The {!r} parameter should be of type {!r}'
         raise TypeError(pattern.format('threads', 'int'))
+    if threads < 0:
+        pattern = 'The {!r} parameter should be an integer >= {!r}'
+        raise TypeError(pattern.format('threads', 0))
     scheduler = TaskScheduler(tasks, processes, threads)
     return scheduler.execute()
