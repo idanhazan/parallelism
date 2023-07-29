@@ -5,6 +5,7 @@ API Reference
 - `task_scheduler <https://parallelism.readthedocs.io/en/latest/api_reference/task_scheduler.html>`_
 
 .. toctree::
+    :caption: API Reference
     :maxdepth: 2
     :glob:
 
