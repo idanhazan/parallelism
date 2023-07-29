@@ -41,5 +41,6 @@ API Reference
     :hidden:
     :caption: API Reference
     :maxdepth: 0
+    :glob:
         
     api_reference/*
