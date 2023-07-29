@@ -39,6 +39,7 @@ API reference
 
 .. toctree::
     :caption: API reference
-    :glob: api_reference/*.html
     :hidden:
     :maxdepth: 2
+    
+    api_reference/*.html
