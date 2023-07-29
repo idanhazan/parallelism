@@ -42,4 +42,5 @@ API Reference
     :hidden:
     :maxdepth: 2
     
-    api_reference/*
+    api_reference/scheduled_task
+    api_reference/task_scheduler
