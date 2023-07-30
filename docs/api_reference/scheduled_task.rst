@@ -45,3 +45,13 @@ An example of basic usage for `dependencies`:
 ...
 >>> p = scheduled_task(Process, 'p', func1)
 >>> t = scheduled_task(Thread, 't', func2, dependencies=(p,))
+
+An example of basic usage for `processes` and `threads`:
+
+>>> def func():
+...     with ProcessPoolExecutor(max_workers=2) as executor:
+...         pass
+...     with ThreadPoolExecutor(max_workers=4) as executor:
+...         pass
+...
+>>> p = scheduled_task(Process, 'p', func, processes=2, threads=4)
