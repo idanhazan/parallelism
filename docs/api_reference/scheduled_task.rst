@@ -4,8 +4,8 @@ scheduled_task
 .. autofunction:: parallelism.scheduled_task
 
 .. autoclass:: parallelism.core.scheduled_task.ScheduledTask
+   :members: executor, name, target, args, kwargs
 
-   .. autoproperty:: executor
    .. autoproperty:: return_value
 
 Examples
