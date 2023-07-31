@@ -4,6 +4,7 @@ scheduled_task
 .. autofunction:: parallelism.scheduled_task
 
 .. autoclass:: parallelism.core.scheduled_task.ScheduledTask
+   :ignore-module-all:
    :members: executor, name, target, args, kwargs
 
    .. autoproperty:: return_value
