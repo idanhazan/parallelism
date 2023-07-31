@@ -6,6 +6,7 @@ scheduled_task
 .. autoclass:: parallelism.core.scheduled_task.ScheduledTask
    :member-order: bysource
    :exclude-members: initialized
+   :members:
 
    .. autoproperty:: return_value
 
