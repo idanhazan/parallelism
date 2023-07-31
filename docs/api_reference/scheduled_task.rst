@@ -3,6 +3,10 @@ scheduled_task
 
 .. autofunction:: parallelism.scheduled_task
 
+.. autoclass:: parallelism.core.scheduled_task.ScheduledTask
+
+   .. autoproperty:: return_value
+
 Examples
 --------
 
