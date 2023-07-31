@@ -5,6 +5,7 @@ scheduled_task
 
 .. autoclass:: parallelism.core.scheduled_task.ScheduledTask
 
+   .. autoproperty:: executor
    .. autoproperty:: return_value
 
 Examples
