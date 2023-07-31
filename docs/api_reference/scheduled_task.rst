@@ -1,9 +1,9 @@
 scheduled_task
 ==============
 
-.. autofunction:: parallelism.scheduled_task
+.. automodule:: parallelism
 
-:py:obj: parallelism.core.scheduled_task.ScheduledTask
+.. autofunction:: parallelism.scheduled_task
 
 Examples
 --------
