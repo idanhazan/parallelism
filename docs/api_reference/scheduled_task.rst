@@ -3,7 +3,7 @@ scheduled_task
 
 .. autofunction:: parallelism.scheduled_task
 
-:class: parallelism.core.scheduled_task.ScheduledTask
+:py:obj: parallelism.core.scheduled_task.ScheduledTask
 
 Examples
 --------
