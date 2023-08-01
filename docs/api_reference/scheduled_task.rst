@@ -13,8 +13,6 @@ Scheduled Task
 
          An object containing a reference to the return value of a task
 
-         :type: parallelism.core.return_value.ReturnValue
-
 .. automodule:: parallelism.core.return_value
 
    .. py:class:: ReturnValue
@@ -27,26 +25,20 @@ Scheduled Task
       >>> st.return_value
       ReturnValue(task=ScheduledTask(...))
 
-      .. py:method:: __call__(self, *args, **kwargs)
+      .. py:method:: __call__(self, *args, **kwargs) -> ReturnValue
 
          >>> st.return_value(*args, **kwargs)
          ReturnValue(task=ScheduledTask(...))
 
-         :type: parallelism.core.return_value.ReturnValue
-
-      .. py:method:: __getattribute__(self, name)
+      .. py:method:: __getattribute__(self, name) -> ReturnValue
 
          >>> st.return_value.name
          ReturnValue(task=ScheduledTask(...))
 
-         :type: parallelism.core.return_value.ReturnValue
-
-      .. py:method:: __getitem__(self, key)
+      .. py:method:: __getitem__(self, key) -> ReturnValue
 
          >>> st.return_value[key]
          ReturnValue(task=ScheduledTask(...))
-
-         :type: parallelism.core.return_value.ReturnValue
 
 Examples
 --------
