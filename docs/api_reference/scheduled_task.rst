@@ -19,15 +19,15 @@ Scheduled Task
 
       Description of ReturnValue
 
-      .. py:special-method:: __call__
+      .. py:special-method:: __call__(self, *args, **kwargs)
 
          __call__(self, *args, **kwargs)
 
-      .. py:special-method:: __getattribute__
+      .. py:special-method:: __getattribute__(self, name)
 
          __getattribute__(self, name)
 
-      .. py:special-method:: __getitem__
+      .. py:special-method:: __getitem__(self, key)
 
          __getitem__(self, key)
 
