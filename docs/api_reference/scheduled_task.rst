@@ -7,7 +7,6 @@ Scheduled Task
    :members:
 
    .. py:class:: ScheduledTask
-      :show-inheritance:
 
       .. py:property:: return_value
 
