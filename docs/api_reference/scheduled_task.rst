@@ -5,7 +5,7 @@ Scheduled Task
 
 .. py:class:: parallelism.core.return_value.ReturnValue
 
-.. py:class:: parallelism.scheduled_task.ScheduledTask
+.. py:class:: parallelism.core.scheduled_task.ScheduledTask
 
 Information
 -----------
