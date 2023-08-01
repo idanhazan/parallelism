@@ -1,4 +1,4 @@
-task_scheduler
+Task Scheduler
 ==============
 
 .. autofunction:: parallelism.task_scheduler
