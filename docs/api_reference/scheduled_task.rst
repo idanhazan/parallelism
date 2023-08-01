@@ -3,8 +3,8 @@ Scheduled Task
 
 .. autofunction:: parallelism.scheduled_task
 
-.. autoclass:: parallelism.core.return_value.ReturnValue(x)
-   :exclude-members: *
+.. autoclass:: parallelism.core.return_value.ReturnValue
+   :noindex:
 
 Information
 -----------
