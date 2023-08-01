@@ -7,53 +7,38 @@ Scheduled Task
 
    .. py:class:: ScheduledTask
 
-      Description of ScheduledTask
+      A :py:obj:`collections.namedtuple` object representing a task
 
       .. py:property:: return_value
 
-         Description of ReturnValue
+         An object containing a reference to the return value of a task
 
 .. automodule:: parallelism.core.return_value
 
    .. py:class:: ReturnValue
 
-      Description of ReturnValue
+      This object implements
+      `__call__`, `__getattribute__` and `__getitem__`
+      to allow getting the desired value at runtime
 
-      .. py:special-method:: __call__(self, *args, **kwargs)
+      >>> st = scheduled_task(...)
+      >>> st.return_value
+      ReturnValue(task=ScheduledTask(...))
 
-         __call__(self, *args, **kwargs)
+      .. py:method:: __call__(self, *args, **kwargs)
+
+         >>> st.return_value(*args, **kwargs)
+         ReturnValue(task=ScheduledTask(...))
 
       .. py:method:: __getattribute__(self, name)
 
-         __getattribute__(self, name)
+         >>> st.return_value.name
+         ReturnValue(task=ScheduledTask(...))
 
-      .. py:function:: __getitem__(self, key)
+      .. py:method:: __getitem__(self, key)
 
-         __getitem__(self, key)
-
-Information
------------
-
-The :py:func:`~parallelism.scheduled_task` function returns a :py:class:`~parallelism.core.scheduled_task.ScheduledTask` object,
-this object has a property called :py:attr:`~parallelism.core.scheduled_task.ScheduledTask.return_value`
-which returns a :py:class:`~parallelism.core.return_value.ReturnValue` object.
-
-The :py:class:`~parallelism.core.return_value.ReturnValue` object implements
-`__call__`, `__getattribute__` and `__getitem__` to allow getting the desired value at runtime.
-
->>> st = scheduled_task(...)
->>> # As it is without change
->>> st.return_value
-ReturnValue(task=ScheduledTask(...))
->>> # __call__
->>> st.return_value(*args, **kwargs)
-ReturnValue(task=ScheduledTask(...))
->>> # __getattribute__
->>> st.return_value.name
-ReturnValue(task=ScheduledTask(...))
->>> # __getitem__
->>> st.return_value[key]
-ReturnValue(task=ScheduledTask(...))
+         >>> st.return_value[key]
+         ReturnValue(task=ScheduledTask(...))
 
 Examples
 --------
