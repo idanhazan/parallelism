@@ -3,10 +3,22 @@ Scheduled Task
 
 .. autofunction:: parallelism.scheduled_task
 
-.. py:module:: parallelism.core
-   .. py:class:: scheduled_task.ScheduledTask
+.. automodule:: parallelism.core.scheduled_task
+   :members:
+
+   .. py:class:: ScheduledTask
+      :show-inheritance:
+
       .. py:property:: return_value
-   .. py:class:: return_value.ReturnValue
+
+         The return value property of the ScheduledTask.
+
+.. automodule:: parallelism.core.return_value
+   :members:
+
+   .. py:class:: ReturnValue
+
+      The ReturnValue class represents a return value from a task.
 
 Information
 -----------
