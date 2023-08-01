@@ -1,4 +1,4 @@
-scheduled_task
+Scheduled Task
 ==============
 
 .. automodule:: parallelism
