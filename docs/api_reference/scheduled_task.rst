@@ -3,10 +3,10 @@ Scheduled Task
 
 .. autofunction:: parallelism.scheduled_task
 
-.. py:class:: parallelism.core.scheduled_task.ScheduledTask
-   .. py:property:: return_value
-
-.. py:class:: parallelism.core.return_value.ReturnValue
+.. py:module:: parallelism.core
+   .. py:class:: scheduled_task.ScheduledTask
+      .. py:property:: return_value
+   .. py:class:: return_value.ReturnValue
 
 Information
 -----------
