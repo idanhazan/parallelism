@@ -4,7 +4,6 @@ Scheduled Task
 .. autofunction:: parallelism.scheduled_task
 
 .. automodule:: parallelism.core.scheduled_task
-   :members:
 
    .. py:class:: ScheduledTask
 
