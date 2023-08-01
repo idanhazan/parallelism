@@ -14,4 +14,5 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
 ]
+add_module_names = False
 autodoc_typehints = 'description'
