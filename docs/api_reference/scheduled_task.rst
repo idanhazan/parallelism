@@ -3,8 +3,7 @@ Scheduled Task
 
 .. autofunction:: parallelism.scheduled_task
 
-.. autoclass:: parallelism.core.return_value.ReturnValue
-   :noindex:
+.. py:class:: parallelism.core.return_value.ReturnValue
 
 Information
 -----------
