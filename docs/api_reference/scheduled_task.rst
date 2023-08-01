@@ -5,6 +5,23 @@ scheduled_task
 
 .. autofunction:: parallelism.scheduled_task
 
+Information
+-----------
+
+The `scheduled_task` function returns a `ScheduledTask` object,
+this object has a property called `return_value` which returns a `ReturnValue` object.
+
+The ReturnValue object implements `__call__`, `__getattribute__` and `__getitem__`
+to allow getting the desired value at runtime.
+
+>>> st = scheduled_task(...)
+>>> st.return_value(*args, **kwargs)  # __call__
+ReturnValue(task=ScheduledTask(...))
+>>> st.return_value.name  # __getattribute__
+ReturnValue(task=ScheduledTask(...))
+>>> st.return_value[key]  # __getitem__
+ReturnValue(task=ScheduledTask(...))
+
 Examples
 --------
 
