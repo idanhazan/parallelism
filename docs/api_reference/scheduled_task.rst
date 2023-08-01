@@ -15,11 +15,17 @@ The ReturnValue object implements `__call__`, `__getattribute__` and `__getitem_
 to allow getting the desired value at runtime.
 
 >>> st = scheduled_task(...)
->>> st.return_value(*args, **kwargs)  # __call__
+>>> # As it is without change
+>>> st.return_value
 ReturnValue(task=ScheduledTask(...))
->>> st.return_value.name  # __getattribute__
+>>> # __call__
+>>> st.return_value(*args, **kwargs)
 ReturnValue(task=ScheduledTask(...))
->>> st.return_value[key]  # __getitem__
+>>> # __getattribute__
+>>> st.return_value.name
+ReturnValue(task=ScheduledTask(...))
+>>> # __getitem__
+>>> st.return_value[key]
 ReturnValue(task=ScheduledTask(...))
 
 Examples
