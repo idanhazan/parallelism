@@ -1,9 +1,10 @@
 Scheduled Task
 ==============
 
-.. automodule:: parallelism
-
 .. autofunction:: parallelism.scheduled_task
+
+.. autoclass:: parallelism.core.return_value.ReturnValue
+   :exclude-members: *
 
 Information
 -----------
