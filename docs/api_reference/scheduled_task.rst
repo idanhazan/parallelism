@@ -4,8 +4,10 @@ Scheduled Task
 .. autofunction:: parallelism.scheduled_task
 
 .. py:class:: parallelism.core.return_value.ReturnValue
+   :name: ReturnValue
 
 .. py:class:: parallelism.core.scheduled_task.ScheduledTask
+   :name: ScheduledTask
 
 Information
 -----------
