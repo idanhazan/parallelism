@@ -8,11 +8,12 @@ Scheduled Task
 Information
 -----------
 
-The `scheduled_task` function returns a `ScheduledTask` object,
-this object has a property called `return_value` which returns a `ReturnValue` object.
+The :py:func:`parallelism.scheduled_task` function returns a :py:class:`parallelism.core.scheduled_task.ScheduledTask` object,
+this object has a property called :py:attr:`parallelism.core.scheduled_task.ScheduledTask.return_value`
+which returns a :py:class:`parallelism.core.return_value.ReturnValue` object.
 
-The ReturnValue object implements `__call__`, `__getattribute__` and `__getitem__`
-to allow getting the desired value at runtime.
+The :py:class:`parallelism.core.return_value.ReturnValue` object implements
+`__call__`, `__getattribute__` and `__getitem__` to allow getting the desired value at runtime.
 
 >>> st = scheduled_task(...)
 >>> # As it is without change
