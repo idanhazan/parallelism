@@ -23,11 +23,11 @@ Scheduled Task
 
          __call__(self, *args, **kwargs)
 
-      .. py:special-method:: __getattribute__(self, name)
+      .. py:method:: __getattribute__(self, name)
 
          __getattribute__(self, name)
 
-      .. py:special-method:: __getitem__(self, key)
+      .. py:function:: __getitem__(self, key)
 
          __getitem__(self, key)
 
