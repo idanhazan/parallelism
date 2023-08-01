@@ -9,7 +9,7 @@ Scheduled Task
 
       A :py:obj:`collections.namedtuple` object representing a task
 
-      .. py:property:: return_value -> ReturnValue
+      .. py:property:: return_value -> parallelism.core.return_value.ReturnValue
 
          An object containing a reference to the return value of a task
 
