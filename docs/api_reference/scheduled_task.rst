@@ -7,16 +7,29 @@ Scheduled Task
 
    .. py:class:: ScheduledTask
 
+      Description of ScheduledTask
+
       .. py:property:: return_value
 
-         The return value property of the ScheduledTask.
+         Description of ReturnValue
 
 .. automodule:: parallelism.core.return_value
-   :members:
 
    .. py:class:: ReturnValue
 
-      The ReturnValue class represents a return value from a task.
+      Description of ReturnValue
+
+      .. py:special-method:: __call__
+
+         __call__(self, *args, **kwargs)
+
+      .. py:special-method:: __getattribute__
+
+         __getattribute__(self, name)
+
+      .. py:special-method:: __getitem__
+
+         __getitem__(self, key)
 
 Information
 -----------
