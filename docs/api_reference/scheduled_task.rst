@@ -21,10 +21,6 @@ Scheduled Task
       `__call__`, `__getattribute__` and `__getitem__`
       to allow getting the desired value at runtime
 
-      >>> st = scheduled_task(...)
-      >>> st.return_value
-      ReturnValue(task=ScheduledTask(...))
-
       .. code-block:: python
       
          from parallelism import scheduled_task
