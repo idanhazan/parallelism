@@ -27,7 +27,7 @@ Scheduled Task
 
          st = scheduled_task(executor=..., name=..., target=..., args, kwargs, ...)
 
-      >>> st.return_value(*args, **kwargs)
+      >>> st.return_value
       ReturnValue(task=ScheduledTask(...))
 
       .. py:method:: __call__(self, *args, **kwargs)
