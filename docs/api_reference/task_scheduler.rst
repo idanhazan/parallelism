@@ -3,6 +3,13 @@ Task Scheduler
 
 .. autofunction:: parallelism.task_scheduler
 
+.. automodule:: parallelism.core.scheduler_result
+   :members:
+
+   .. py:class:: SchedulerResult
+
+      # Coming soon...
+
 Examples
 --------
 
