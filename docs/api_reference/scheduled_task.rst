@@ -58,13 +58,19 @@ Examples
     # Third-party packages
     from parallelism import scheduled_task
 
-An example of basic usage for creating a `Process` and/or `Thread`:
+Minimalistic
+************
+
+An example of basic usage for creating a `ScheduledTask` instance:
 
 >>> def func():
 ...     pass
 ...
 >>> p = scheduled_task(Process, 'p', func)
 >>> t = scheduled_task(Thread, 't', func)
+
+Parameters
+**********
 
 An example of basic usage for `args` and `kwargs`:
 
@@ -77,6 +83,9 @@ An example of basic usage for `args` and `kwargs`:
 >>> p = scheduled_task(Process, 'p', func1, args=(1, 2), kwargs={'c': 3})
 >>> t = scheduled_task(Thread, 't', func2, kwargs={'x': p.return_value})
 
+Dependencies
+************
+
 An example of basic usage for `dependencies`:
 
 >>> def func1():
@@ -87,6 +96,9 @@ An example of basic usage for `dependencies`:
 ...
 >>> p = scheduled_task(Process, 'p', func1)
 >>> t = scheduled_task(Thread, 't', func2, dependencies=(p,))
+
+Workers
+*******
 
 An example of basic usage for `processes` and `threads`:
 
