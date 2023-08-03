@@ -9,6 +9,18 @@ Task Scheduler
 
       # Coming soon...
 
+      .. py:property:: elapsed_time
+
+         # Coming soon...
+
+      .. py:property:: error_handler
+
+         # Coming soon...
+
+      .. py:property:: return_value
+
+         # Coming soon...
+
 Examples
 --------
 
