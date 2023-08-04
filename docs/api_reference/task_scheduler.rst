@@ -7,7 +7,9 @@ Task Scheduler
 
    .. py:class:: SchedulerResult
 
-      This object contains all the required information that occurred for each task
+      The `SchedulerResult` class is a specialized container that inherits from the `collections.namedtuple` class,
+      designed to hold and manage information related to task scheduling and execution results.
+      It encapsulates data about execution times, elapsed times, exceptions, and return values for various tasks.
 
       .. code-block:: python
 
@@ -25,15 +27,17 @@ Task Scheduler
 
       .. py:property:: execution_time
 
+         A dictionary where each key represents a task name, and the corresponding value is the timestamp (`datetime.datetime`) when the task was started.
+
          >>> ts.execution_time
          {
             'st1': datetime.datetime(%Y, %m, %d, %H, %M, %S, %f),
             'st2': datetime.datetime(%Y, %m, %d, %H, %M, %S, %f),
          }
 
-         In this case, it will specify for all the tasks when they started
-
       .. py:property:: elapsed_time
+
+         A dictionary where each key represents a task name, and the corresponding value is the time in seconds (`float`) it took for the task to complete.
 
          >>> ts.elapsed_time
          {
@@ -41,9 +45,10 @@ Task Scheduler
             'st2': <time in seconds (float)>,
          }
 
-         In this case, it will specify for the relevant tasks (that not canceled) how many time they ran approximately
-
       .. py:property:: raise_exception
+
+         A dictionary where each key represents a task name, and the corresponding value is a `RaiseException` object that contains information about any exceptions raised during task execution.
+         The `RaiseException` object has two properties: `exception` (an `Exception` object) and `traceback` (a `str` containing the exception's traceback).
 
          >>> ts.raise_exception
          {
@@ -53,30 +58,29 @@ Task Scheduler
             ),
          }
 
-         In this case, it will specify for the relevant tasks (that was raise exception) with the details of failure
-
       .. py:property:: return_value
+
+         A dictionary where each key represents a task name, and the corresponding value is the return value (`typing.Any`) from the task's execution after completion.
+         Note: `continuous=True` is required.
 
          >>> ts.return_value
          {
             'st1': 12345,
          }
 
-         In this case, it will specify for the relevant tasks (continual=True) with the return value
-
 .. automodule:: parallelism.core.raise_exception
 
    .. py:class:: RaiseException
 
-      # Coming soon...
+      The `RaiseException` class is used within the `SchedulerResult` class to store information about exceptions raised during task execution.
 
       .. py:property:: exception
 
-         # Coming soon...
+         The exception object that was raised during task execution.
 
       .. py:property:: traceback
 
-         # Coming soon...
+         A string representation of the traceback associated with the raised exception.
 
 Examples
 --------
