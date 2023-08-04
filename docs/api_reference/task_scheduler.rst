@@ -89,7 +89,7 @@ Task Scheduler
          The exception object that was raised during task execution.
 
          >>> ts.raise_exception.get('st').exception
-         ZeroDivisionError: division by zero
+         ZeroDivisionError('division by zero')
 
       .. py:property:: traceback
 
