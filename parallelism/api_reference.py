@@ -148,16 +148,31 @@ def task_scheduler(
     threads: int = None,
 ) -> SchedulerResult:
     """
-    Schedule multiple tasks for execution
+    The `task_scheduler` function orchestrates the simultaneous execution of
+    multiple tasks, optimizing parallelism and enhancing computational
+    efficiency.
+    It allows developers to efficiently manage and distribute tasks among
+    processes and threads for improved performance.
 
     Parameters
     ----------
     tasks : tuple of ScheduledTask
-        | Tasks that need to be performed
-    processes : int, default `os.cpu_count()`
-        | The number of processes assigned to perform the tasks
-    threads : int, default `os.cpu_count()`
-        | The number of threads assigned to perform the tasks
+        | A tuple containing instances of ScheduledTask representing the
+        tasks to be executed concurrently.
+    processes : int, default os.cpu_count()
+        | Specifies the total number of parallel processes available for
+        executing all tasks collectively.
+    threads : int, default os.cpu_count()
+        | Specifies the total number of parallel threads available for
+        executing all tasks collectively.
+
+    Returns
+    -------
+    SchedulerResult
+        An instance of the `SchedulerResult` class that encapsulates the
+        outcomes and statistics of task execution.
+        This result provides insights into execution times, elapsed times,
+        exceptions, and return values.
     """
     if processes is None:
         processes = cpu_count() or 1
