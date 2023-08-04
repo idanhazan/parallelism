@@ -7,19 +7,54 @@ Task Scheduler
 
    .. py:class:: SchedulerResult
 
-      # Coming soon...
+      This object contains all the required information that occurred for each task
+
+      .. code-block:: python
+
+         from parallelism import scheduled_task, task_scheduler
+
+         def func1():
+            return 12345
+
+         def func2():
+            raise Exception('Custom exception message')
+
+         st1 = scheduled_task(executor=..., name='st1', target=func1, ..., continual=True)
+         st2 = scheduled_task(executor=..., name='st2', target=func2, ..., continual=True)
+         ts = task_scheduler(tasks=(st1, st2), ...)
+
+      .. py:property:: execution_time
+
+         >>> ts.execution_time
+         {
+            'st1': datetime.datetime(%Y, %m, %d, %H, %M, %S, %f),
+            'st2': datetime.datetime(%Y, %m, %d, %H, %M, %S, %f),
+         }
 
       .. py:property:: elapsed_time
 
-         # Coming soon...
+         >>> ts.elapsed_time
+         {
+            'st1': <time in seconds (float)>,
+            'st2': <time in seconds (float)>,
+         }
 
       .. py:property:: error_handler
 
-         # Coming soon...
+         >>> ts.error_handler
+         {
+            'st2': ErrorHandler(
+               exception=Exception('Custom exception message'),
+               traceback=<string of traceback>,
+            ),
+         }
 
       .. py:property:: return_value
 
-         # Coming soon...
+         >>> ts.return_value
+         {
+            'st1': 12345,
+         }
 
 .. automodule:: parallelism.core.handlers.error_handler
 
