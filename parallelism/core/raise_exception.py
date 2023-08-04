@@ -5,10 +5,10 @@ from typing import NamedTuple, TYPE_CHECKING
 if TYPE_CHECKING:
     from typing import Optional
 
-__all__ = ('ErrorHandler',)
+__all__ = ('RaiseException',)
 
 
-class ErrorHandler(NamedTuple):
+class RaiseException(NamedTuple):
     exception: Exception
     traceback: Optional[str] = None
 

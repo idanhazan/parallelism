@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from decimal import Decimal
 from time import time
 from traceback import format_exc
@@ -8,7 +9,7 @@ from typing import TYPE_CHECKING
 from parallelism.config import DECIMAL_PRECISION, DECIMAL_ROUNDING_MODE
 from parallelism.core.exceptions.dependency_error import DependencyError
 from parallelism.core.exceptions.worker_error import WorkerError
-from parallelism.core.handlers.error_handler import ErrorHandler
+from parallelism.core.raise_exception import RaiseException
 from parallelism.logger import get_logger
 
 if TYPE_CHECKING:
@@ -31,8 +32,9 @@ class FunctionHandler:
         self.name = name
         self.target = target
         self.proxy = proxy
+        self.proxy['execution_time'] = datetime.now()
         self.proxy['elapsed_time'] = None
-        self.proxy['error_handler'] = None
+        self.proxy['raise_exception'] = None
         self.proxy['return_value'] = None
         self.proxy['finish'] = False
         self.proxy['complete'] = False
@@ -45,7 +47,7 @@ class FunctionHandler:
             self.proxy['return_value'] = self.target(*args, **kwargs)
             self.proxy['complete'] = True
         except Exception as exception:
-            self.proxy['error_handler'] = ErrorHandler(exception, format_exc())
+            self.proxy['raise_exception'] = RaiseException(exception, format_exc())
         finally:
             end = time()
             self.proxy['finish'] = True
@@ -60,7 +62,7 @@ class FunctionHandler:
         name = self.name
         elapsed_time = self.proxy.get('elapsed_time')
         elapsed_time = self.beautify_time(seconds=elapsed_time)
-        error_handler = self.proxy.get('error_handler')
+        raise_exception = self.proxy.get('raise_exception')
         if blocker and blocker.get('reason') == 'dependency':
             *left, right = blocker.get('tasks')
             pattern = '{!r} is being canceled, due to '
@@ -79,7 +81,7 @@ class FunctionHandler:
                 message='{!r} has been canceled'.format(name),
                 tasks=blocker.get('tasks'),
             )
-            self.proxy['error_handler'] = ErrorHandler(exception)
+            self.proxy['raise_exception'] = RaiseException(exception)
             self.proxy['finish'] = True
             logger.warning(msg=message)
         elif blocker and blocker.get('reason') == 'worker':
@@ -118,12 +120,12 @@ class FunctionHandler:
                 processes=processes,
                 threads=threads,
             )
-            self.proxy['error_handler'] = ErrorHandler(exception)
+            self.proxy['raise_exception'] = RaiseException(exception)
             self.proxy['finish'] = True
             logger.warning(msg=message)
-        elif isinstance(error_handler, ErrorHandler):
+        elif isinstance(raise_exception, RaiseException):
             pattern = '{!r} ran approximately {} - {!r}'
-            message = pattern.format(name, elapsed_time, error_handler)
+            message = pattern.format(name, elapsed_time, raise_exception)
             logger.error(msg=message)
         else:
             pattern = '{!r} ran approximately {}'

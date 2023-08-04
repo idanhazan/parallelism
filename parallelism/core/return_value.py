@@ -13,10 +13,6 @@ __all__ = ('ReturnValue',)
 class ReturnValue:
     __slots__ = ('task', 'transformations')
 
-    # def __init__(self, name: str) -> None:
-    #     self.name = name
-    #     self.transformations = []
-
     def __init__(self, task: ScheduledTask) -> None:
         self.task = task
         self.transformations = []

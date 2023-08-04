@@ -37,7 +37,7 @@ def scheduled_task(
 
     Parameters
     ----------
-    executor : multiprocessing.Process or threading.Thread
+    executor : type of `multiprocessing.Process` or `threading.Thread`
         | The execution unit of a task
     name : str
         | A unique identifier representing a task
@@ -137,15 +137,15 @@ def task_scheduler(
     ----------
     tasks : tuple of ScheduledTask
         | Tasks that need to be performed
-    processes : int, optional
+    processes : int, default `os.cpu_count()`
         | The number of processes assigned to perform the tasks
-    threads : int, optional
+    threads : int, default `os.cpu_count()`
         | The number of threads assigned to perform the tasks
     """
     if processes is None:
-        processes = processes or cpu_count() or 1
+        processes = cpu_count() or 1
     if threads is None:
-        threads = threads or cpu_count() or 1
+        threads = cpu_count() or 1
     if not isinstance(tasks, tuple):
         pattern = 'The {!r} parameter should be of type {!r}'
         raise TypeError(pattern.format('tasks', 'tuple'))

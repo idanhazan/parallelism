@@ -115,9 +115,11 @@ class TaskScheduler:
         for index, task in enumerate(self.tasks):
             self.shared_memory_handler.free(index, task)
         self.manager.shutdown()
+        self.shared_memory_handler.sort()
         return SchedulerResult(
+            self.shared_memory_handler.execution_time,
             self.shared_memory_handler.elapsed_time,
-            self.shared_memory_handler.error_handler,
+            self.shared_memory_handler.raise_exception,
             self.shared_memory_handler.return_value,
         )
 

@@ -81,7 +81,6 @@ class ScheduledTask(NamedTuple):
     @property
     def depends_on_dependencies(self) -> Tuple[ScheduledTask, ...]:
         return tuple(task for task in self.dependencies)
-        # return tuple(task.name for task in self.dependencies)
 
     @property
     def depends_on_parameters(self) -> Tuple[ScheduledTask, ...]:

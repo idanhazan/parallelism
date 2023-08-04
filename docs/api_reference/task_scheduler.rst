@@ -43,9 +43,19 @@ Task Scheduler
 
          In this case, it will specify for the relevant tasks (that not canceled) how many time they ran approximately
 
-      .. py:property:: error_handler
+      .. py:property:: raise_exception
 
-         >>> ts.error_handler
+         >>> ts.raise_exception
+                  {
+                     'st2': ErrorHandler(
+                        exception=Exception('Custom exception message'),
+                        traceback=<string of traceback>,
+                     ),
+                  }
+
+                  In this case, it will specify for the relevant tasks (that was raise exception) with the details of failure
+
+
          {
             'st2': ErrorHandler(
                exception=Exception('Custom exception message'),
@@ -64,7 +74,7 @@ Task Scheduler
 
          In this case, it will specify for the relevant tasks (continual=True) with the return value
 
-.. automodule:: parallelism.core.handlers.error_handler
+.. automodule:: parallelism.core.handlers.raise_exception
 
    .. py:class:: ErrorHandler
 
