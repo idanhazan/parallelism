@@ -37,33 +37,39 @@ def scheduled_task(
 
     Parameters
     ----------
-    executor : `type` of `multiprocessing.Process` or `threading.Thread`
+    executor : type of multiprocessing.Process or threading.Thread
         | Specifies the execution unit for the task,
         either as a `multiprocessing.Process` or a `threading.Thread`.
-    name : `str`
+    name : str
         | A unique identifier representing the task,
         aiding in differentiation and tracking.
-    target : `callable`
+    target : callable
         | The function to be invoked by the task scheduler upon execution.
-    args : `tuple`, optional
+    args : tuple, optional
         | Positional arguments related to the `target` function.
-    kwargs : `dict`, optional
+    kwargs : dict, optional
         | Keyword arguments related to the `target` function.
-    dependencies : `tuple` of `ScheduledTask`, optional
+    dependencies : tuple of ScheduledTask, optional
         | Tasks that the current task depends on,
         ensuring proper execution order.
-    priority : `int` or `float`, optional
+    priority : int or float, optional
         | Priority level of task execution,
         influencing the order of execution among tasks.
         | Lower values indicate higher priority.
-    processes : `int`, default `0`
+    processes : int, default 0
         | The number of processes to be allocated by the `target` function.
-    threads : `int`, default `0`
+    threads : int, default 0
         | The number of threads to be allocated by the `target` function.
-    continual : `bool`, default `False`
+    continual : bool, default False
         | A flag indicating whether the task scheduler should store the result
         of the task after completion.
         | If `True`, the result is stored for later access.
+
+    Returns
+    -------
+    ScheduledTask
+        A scheduled task instance with configured properties,
+        ready for execution within the task scheduler.
     """
     if args is None:
         args = ()
