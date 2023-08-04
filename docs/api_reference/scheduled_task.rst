@@ -25,25 +25,61 @@ Scheduled Task
       
          from parallelism import scheduled_task
 
-         st = scheduled_task(executor=..., name=..., target=..., args, kwargs, ...)
+         def func1(reverse=False):
+            return 54321 if reverse else 12345
 
-      >>> st.return_value
-      ReturnValue(task=ScheduledTask(...))
+         def func2():
+            return func1
+
+         def func3():
+            return {
+               'a': 123,
+               'b': 45,
+            }
+
+         def func4():
+            return [1, 2, 3, 4, 5]
+
+         st1 = scheduled_task(executor=..., name='st1', target=func1, ...)
+         st2 = scheduled_task(executor=..., name='st2', target=func2, ...)
+         st3 = scheduled_task(executor=..., name='st3', target=func3, ...)
+         st4 = scheduled_task(executor=..., name='st4', target=func4, ...)
+
+      >>> st1.return_value
+      ReturnValue(task=ScheduledTask(executor=..., name='st1', target='__main__.func1', ...))
+
+      In this case, the return value will be `12345`
 
       .. py:method:: __call__(self, *args, **kwargs)
 
-         >>> st.return_value(*args, **kwargs)
-         ReturnValue(task=ScheduledTask(...))
+         >>> st2.return_value()
+         ReturnValue(task=ScheduledTask(executor=..., name='st2', target='__main__.func2', ...)))
+
+         In this case, the return value will be `12345`
+
+         >>> st2.return_value(reverse=True)
+         ReturnValue(task=ScheduledTask(executor=..., name='st2', target='__main__.func2', ...)))
+
+         In this case, the return value will be `54321`
 
       .. py:method:: __getattribute__(self, name)
 
-         >>> st.return_value.name
-         ReturnValue(task=ScheduledTask(...))
+         >>> st3.return_value.get('b')
+         ReturnValue(task=ScheduledTask(executor=..., name='st3', target='__main__.func3', ...))
+
+         In this case, the return value will be `45`
 
       .. py:method:: __getitem__(self, key)
 
-         >>> st.return_value[key]
-         ReturnValue(task=ScheduledTask(...))
+         >>> st4.return_value[2]
+         ReturnValue(task=ScheduledTask(executor=..., name='st4', target='__main__.func4', ...)))
+
+         In this case, the return value will be `3`
+
+         >>> st4.return_value[3:]
+         ReturnValue(task=ScheduledTask(executor=..., name='st4', target='__main__.func4', ...)))
+
+         In this case, the return value will be `45`
 
 Examples
 --------
