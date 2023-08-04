@@ -33,7 +33,11 @@ def scheduled_task(
     continual: bool = False,
 ) -> ScheduledTask:
     """
-    Schedule a task to be executed at the right moment in the task scheduler
+    The `scheduled_task` function empowers developers to efficiently manage and
+    execute tasks in a parallel computing environment.
+    It is a fundamental tool for creating and scheduling tasks within the task
+    scheduler, allowing for granular control over task execution, dependencies,
+    priorities, and result storage.
 
     Parameters
     ----------
