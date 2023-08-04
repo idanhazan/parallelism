@@ -107,10 +107,14 @@ Examples
    # Third-party packages
    from parallelism import scheduled_task
 
-Minimalistic
-************
+Executor
+********
 
-An example of basic usage for creating a `ScheduledTask` instances:
+Running Different Concurrent Environments:
+
+In this example, `scheduled_task` is used to create a scheduled task named `p` that runs as a `multiprocessing.Process`,
+and another task named `t` that runs as a `threading.Thread`.
+Both tasks execute the same function, `func`.
 
 >>> def func():
 ...     pass
@@ -118,12 +122,13 @@ An example of basic usage for creating a `ScheduledTask` instances:
 >>> p = scheduled_task(Process, 'p', func)
 >>> t = scheduled_task(Thread, 't', func)
 
-In this case, both `p` and `t` will be the same except that `p` will run as `multiprocessing.Process` and `t` will run as `threading.Thread`
+Args & Kwargs
+*************
 
-Parameters
-**********
+Passing Arguments and Dependencies:
 
-An example of basic usage for `args` and `kwargs`:
+Here, `scheduled_task` demonstrates passing arguments and dependencies.
+`p` calculates the sum of `1 + 2 + 3`, and `t` uses the return value of `p` as an argument.
 
 >>> def func1(a, b, c):
 ...     return a + b + c
@@ -134,12 +139,13 @@ An example of basic usage for `args` and `kwargs`:
 >>> p = scheduled_task(Process, 'p', func1, args=(1, 2), kwargs={'c': 3})
 >>> t = scheduled_task(Thread, 't', func2, kwargs={'x': p.return_value})
 
-In this case, `t` will start only after `p` completed, and the parameter `x` will be equal to `6`
-
 Dependencies
 ************
 
-An example of basic usage for `dependencies`:
+Managing Task Dependencies:
+
+This example showcases task dependencies.
+`t` depends on the completion of `p` before starting its execution.
 
 >>> def func1():
 ...     # Saving a local file or updating a database record
@@ -150,12 +156,13 @@ An example of basic usage for `dependencies`:
 >>> p = scheduled_task(Process, 'p', func1)
 >>> t = scheduled_task(Thread, 't', func2, dependencies=(p,))
 
-In this case, `t` will start only after `p` completed
+Priority
+********
 
-Priorities
-**********
+Setting Task Priority:
 
-An example of basic usage for `priority`:
+In this scenario, tasks are assigned priorities.
+`t` is given higher priority than `p`, affecting their order of execution.
 
 >>> def func():
 ...     pass
@@ -163,12 +170,12 @@ An example of basic usage for `priority`:
 >>> p = scheduled_task(Process, 'p', func, priority=2)
 >>> t = scheduled_task(Thread, 't', func, priority=1)
 
-In this case, `t` will be prioritize over `p`
+Processes & Threads
+*******************
 
-Workers
-*******
+Balancing Processes and Threads:
 
-An example of basic usage for `processes` and `threads`:
+Here, `scheduled_task` is used to distribute workload across processes and threads based on specified weights.
 
 >>> def func():
 ...     with ProcessPoolExecutor(max_workers=2) as executor:
@@ -178,17 +185,16 @@ An example of basic usage for `processes` and `threads`:
 ...
 >>> p = scheduled_task(Process, 'p', func, processes=2, threads=4)
 
-In this case, 'p' will get additional weight of number of processes and threads
+Continual
+*********
 
-Continuity
-**********
+Storing Task Return Values:
 
-An example of basic usage for `continual`:
+This example illustrates how to manage stored return values.
+`p`'s return value is stored due to the `continual=True` parameter, while `t`'s return value is not stored.
 
 >>> def func():
 ...     return 123
 ...
 >>> p = scheduled_task(Process, 'p', func, continual=True)
 >>> t = scheduled_task(Thread, 't', func, continual=False)
-
-In this case, when the task scheduler will complete, it will store only the return value of `p`
