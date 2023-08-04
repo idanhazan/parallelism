@@ -32,10 +32,7 @@ Scheduled Task
             return func1
 
          def func3():
-            return {
-               'a': 123,
-               'b': 45,
-            }
+            return {'a': 123, 'b': 45}
 
          def func4():
             return [1, 2, 3, 4, 5]
