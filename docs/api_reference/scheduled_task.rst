@@ -147,14 +147,16 @@ Managing Task Dependencies:
 This example showcases task dependencies.
 `t` depends on the completion of `p` before starting its execution.
 
->>> def func1():
-...     # Saving a local file or updating a database record
+>>> def func1(path, text):
+...     with open(path, 'w') as file:
+...         file.write(text)
 ...
->>> def func2():
-...     # Reading a local file or retrieving a record from the database
+>>> def func2(path):
+...     with open(path, 'r') as file:
+...         return file.read()
 ...
->>> p = scheduled_task(Process, 'p', func1)
->>> t = scheduled_task(Thread, 't', func2, dependencies=(p,))
+>>> p = scheduled_task(Process, 'p', func1, kwargs={'path': 'example.txt', 'text': 'Hello, World!'})
+>>> t = scheduled_task(Thread, 't', func2, kwargs={'path': 'example.txt'}, dependencies=(p,))
 
 Priority
 ********
