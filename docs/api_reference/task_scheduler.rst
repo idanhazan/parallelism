@@ -64,9 +64,9 @@ Task Scheduler
 
          In this case, it will specify for the relevant tasks (continual=True) with the return value
 
-.. automodule:: parallelism.core.handlers.raise_exception
+.. automodule:: parallelism.core.raise_exception
 
-   .. py:class:: ErrorHandler
+   .. py:class:: RaiseException
 
       # Coming soon...
 
