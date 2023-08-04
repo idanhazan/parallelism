@@ -37,26 +37,33 @@ def scheduled_task(
 
     Parameters
     ----------
-    executor : type of `multiprocessing.Process` or `threading.Thread`
-        | The execution unit of a task
-    name : str
-        | A unique identifier representing a task
-    target : callable
-        | A function to be invoked by a task scheduler
-    args : tuple, optional
-        | Positional arguments that are related to the target
-    kwargs : dict, optional
-        | Keyword arguments that are related to the target
-    dependencies : tuple of ScheduledTask, optional
-        | Certain tasks that create dependencies for the current task
-    priority : int or float, optional
-        | Priority level of task execution over others
-    processes : int, default 0
-        | The number of processes will be allocated retrospectively at runtime
-    threads : int, default 0
-        | The number of threads will be allocated retrospectively at runtime
-    continual : bool, default False
-        | An indicator to save the result after the task scheduler
+    executor : `type` of `multiprocessing.Process` or `threading.Thread`
+        | Specifies the execution unit for the task,
+        either as a `multiprocessing.Process` or a `threading.Thread`.
+    name : `str`
+        | A unique identifier representing the task,
+        aiding in differentiation and tracking.
+    target : `callable`
+        | The function to be invoked by the task scheduler upon execution.
+    args : `tuple`, optional
+        | Positional arguments related to the `target` function.
+    kwargs : `dict`, optional
+        | Keyword arguments related to the `target` function.
+    dependencies : `tuple` of `ScheduledTask`, optional
+        | Tasks that the current task depends on,
+        ensuring proper execution order.
+    priority : `int` or `float`, optional
+        | Priority level of task execution,
+        influencing the order of execution among tasks.
+        | Lower values indicate higher priority.
+    processes : `int`, default `0`
+        | The number of processes to be allocated by the `target` function.
+    threads : `int`, default `0`
+        | The number of threads to be allocated by the `target` function.
+    continual : `bool`, default `False`
+        | A flag indicating whether the task scheduler should store the result
+        of the task after completion.
+        | If `True`, the result is stored for later access.
     """
     if args is None:
         args = ()
