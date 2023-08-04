@@ -50,13 +50,13 @@ Examples
 
 .. code-block:: python
 
-    # Built-in modules
-    from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
-    from multiprocessing import Process
-    from threading import Thread
-
-    # Third-party packages
-    from parallelism import scheduled_task
+   # Built-in modules
+   from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+   from multiprocessing import Process
+   from threading import Thread
+   
+   # Third-party packages
+   from parallelism import scheduled_task
 
 Minimalistic
 ************
