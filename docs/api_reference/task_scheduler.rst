@@ -74,13 +74,36 @@ Task Scheduler
 
       The `RaiseException` class is used within the `SchedulerResult` class to store information about exceptions raised during task execution.
 
+      .. code-block:: python
+
+         from parallelism import scheduled_task, task_scheduler
+
+         def func(a, b):
+            return a / b
+
+         st = scheduled_task(executor=..., name='st', target=func, args=(5, 0), ...)
+         ts = task_scheduler(tasks=(st,), ...)
+
       .. py:property:: exception
 
          The exception object that was raised during task execution.
 
+         >>> ts.raise_exception.get('st').exception
+         ZeroDivisionError: division by zero
+
       .. py:property:: traceback
 
          A string representation of the traceback associated with the raised exception.
+
+         >>> ts.raise_exception.get('st').traceback
+         Traceback (most recent call last):
+           File ".../site-packages/parallelism/core/handlers/function_handler.py", line ..., in __call__
+             self.proxy['return_value'] = self.target(*args, **kwargs)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           File ".../main.py", line ..., in func
+             return a / b
+                    ^^^^^
+         ZeroDivisionError: division by zero
 
 Examples
 --------
