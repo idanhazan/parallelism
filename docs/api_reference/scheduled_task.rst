@@ -61,7 +61,7 @@ Examples
 Minimalistic
 ************
 
-An example of basic usage for creating a `ScheduledTask` instance:
+An example of basic usage for creating a `ScheduledTask` instances:
 
 >>> def func():
 ...     pass
