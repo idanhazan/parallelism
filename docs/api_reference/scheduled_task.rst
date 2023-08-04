@@ -7,19 +7,20 @@ Scheduled Task
 
    .. py:class:: ScheduledTask
 
-      A :py:obj:`collections.namedtuple` object representing a task
+      The `ScheduledTask` class, a subclass of `collections.namedtuple`, represents a scheduled task along with its associated return value.
+      This class provides a mechanism to access the return value of the task in a deferred manner using the `ReturnValue` object.
 
       .. py:property:: return_value
 
-         An object containing a reference to the return value of a task
+         A reference to the ReturnValue object associated with this scheduled task.
+         The `ReturnValue` object provides deferred access to the actual return value of the task.
 
 .. automodule:: parallelism.core.return_value
 
    .. py:class:: ReturnValue
 
-      This object implements
-      `__call__`, `__getattribute__` and `__getitem__`
-      to allow getting the desired value at runtime
+      The `ReturnValue` class represents a deferred reference to the return value of a scheduled task.
+      It implements the `__call__`, `__getattribute__`, and `__getitem__` methods to provide flexible access to the actual return value.
 
       .. code-block:: python
       
@@ -49,6 +50,9 @@ Scheduled Task
 
       .. py:method:: __call__(self, *args, **kwargs)
 
+         Invokes the `ReturnValue` object as a callable.
+         This method is used to retrieve the actual return value of the scheduled task.
+
          >>> st2.return_value()
          ReturnValue(task=ScheduledTask(executor=..., name='st2', target='__main__.func2', ...)))
 
@@ -61,12 +65,18 @@ Scheduled Task
 
       .. py:method:: __getattribute__(self, name)
 
+         Retrieves an attribute or method of the actual return value.
+         This method allows access to properties and methods of the return value without directly referencing it.
+
          >>> st3.return_value.get('b')
          ReturnValue(task=ScheduledTask(executor=..., name='st3', target='__main__.func3', ...))
 
          In this case, the return value will be `45`
 
       .. py:method:: __getitem__(self, key)
+
+         Retrieves an item from the actual return value using the provided key.
+         This method allows accessing elements of the return value, such as lists, dictionaries, etc.
 
          >>> st4.return_value[2]
          ReturnValue(task=ScheduledTask(executor=..., name='st4', target='__main__.func4', ...)))
