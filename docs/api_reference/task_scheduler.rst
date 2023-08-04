@@ -46,20 +46,10 @@ Task Scheduler
       .. py:property:: raise_exception
 
          >>> ts.raise_exception
-                  {
-                     'st2': ErrorHandler(
-                        exception=Exception('Custom exception message'),
-                        traceback=<string of traceback>,
-                     ),
-                  }
-
-                  In this case, it will specify for the relevant tasks (that was raise exception) with the details of failure
-
-
          {
-            'st2': ErrorHandler(
+            'st2': RaiseException(
                exception=Exception('Custom exception message'),
-               traceback=<string of traceback>,
+               traceback=<content of traceback (str)>,
             ),
          }
 
