@@ -83,6 +83,8 @@ An example of basic usage for `args` and `kwargs`:
 >>> p = scheduled_task(Process, 'p', func1, args=(1, 2), kwargs={'c': 3})
 >>> t = scheduled_task(Thread, 't', func2, kwargs={'x': p.return_value})
 
+In such case, `t` will start only after `p` completed, and the parameter `x` will be equal to `6`
+
 Dependencies
 ************
 
@@ -97,6 +99,21 @@ An example of basic usage for `dependencies`:
 >>> p = scheduled_task(Process, 'p', func1)
 >>> t = scheduled_task(Thread, 't', func2, dependencies=(p,))
 
+In such case, `t` will start only after `p` completed
+
+Priorities
+**********
+
+An example of basic usage for `priority`:
+
+>>> def func():
+...     pass
+...
+>>> p = scheduled_task(Process, 'p', func, priority=2)
+>>> t = scheduled_task(Thread, 't', func, priority=1)
+
+In such case, `t` will be prioritize over `p`
+
 Workers
 *******
 
@@ -109,3 +126,5 @@ An example of basic usage for `processes` and `threads`:
 ...         pass
 ...
 >>> p = scheduled_task(Process, 'p', func, processes=2, threads=4)
+
+In such case, 'p' will get additional weight of number of processes and threads
