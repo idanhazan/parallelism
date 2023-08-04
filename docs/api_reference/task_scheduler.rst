@@ -31,6 +31,8 @@ Task Scheduler
             'st2': datetime.datetime(%Y, %m, %d, %H, %M, %S, %f),
          }
 
+         In this case, it will specify for all the tasks when they started
+
       .. py:property:: elapsed_time
 
          >>> ts.elapsed_time
@@ -38,6 +40,8 @@ Task Scheduler
             'st1': <time in seconds (float)>,
             'st2': <time in seconds (float)>,
          }
+
+         In this case, it will specify for the relevant tasks (that not canceled) how many time they ran approximately
 
       .. py:property:: error_handler
 
@@ -49,12 +53,16 @@ Task Scheduler
             ),
          }
 
+         In this case, it will specify for the relevant tasks (that was raise exception) with the details of failure
+
       .. py:property:: return_value
 
          >>> ts.return_value
          {
             'st1': 12345,
          }
+
+         In this case, it will specify for the relevant tasks (continual=True) with the return value
 
 .. automodule:: parallelism.core.handlers.error_handler
 
