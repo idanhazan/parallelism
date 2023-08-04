@@ -43,50 +43,56 @@ Scheduled Task
          st3 = scheduled_task(executor=..., name='st3', target=func3, ...)
          st4 = scheduled_task(executor=..., name='st4', target=func4, ...)
 
+      Accessing a Return Value:
+
       >>> st1.return_value
       ReturnValue(task=ScheduledTask(executor=..., name='st1', target='__main__.func1', ...))
-
-      In this case, the return value will be `12345`
+      # At runtime: 12345
 
       .. py:method:: __call__(self, *args, **kwargs)
 
          Invokes the `ReturnValue` object as a callable.
          This method is used to retrieve the actual return value of the scheduled task.
 
+         Invoking the Return Value as a Callable:
+
          >>> st2.return_value()
          ReturnValue(task=ScheduledTask(executor=..., name='st2', target='__main__.func2', ...)))
+         # At runtime: 12345
 
-         In this case, the return value will be `12345`
+         Invoking the Return Value with Parameters:
 
          >>> st2.return_value(reverse=True)
          ReturnValue(task=ScheduledTask(executor=..., name='st2', target='__main__.func2', ...)))
-
-         In this case, the return value will be `54321`
+         # At runtime: 54321
 
       .. py:method:: __getattribute__(self, name)
 
          Retrieves an attribute or method of the actual return value.
          This method allows access to properties and methods of the return value without directly referencing it.
 
+         Accessing a Specific Key in the Return Dictionary:
+
          >>> st3.return_value.get('b')
          ReturnValue(task=ScheduledTask(executor=..., name='st3', target='__main__.func3', ...))
-
-         In this case, the return value will be `45`
+         # At runtime: 45
 
       .. py:method:: __getitem__(self, key)
 
          Retrieves an item from the actual return value using the provided key.
          This method allows accessing elements of the return value, such as lists, dictionaries, etc.
 
+         Accessing an Element by Index:
+
          >>> st4.return_value[2]
          ReturnValue(task=ScheduledTask(executor=..., name='st4', target='__main__.func4', ...)))
+         # At runtime: 3
 
-         In this case, the return value will be `3`
+         Accessing a Slice of Elements:
 
          >>> st4.return_value[3:]
          ReturnValue(task=ScheduledTask(executor=..., name='st4', target='__main__.func4', ...)))
-
-         In this case, the return value will be `45`
+         # At runtime: 45
 
 Examples
 --------
