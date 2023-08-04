@@ -21,14 +21,32 @@ Task Scheduler
 
          # Coming soon...
 
+.. automodule:: parallelism.core.handlers.error_handler
+
+   .. py:class:: ErrorHandler
+
+      # Coming soon...
+
+      .. py:property:: exception
+
+         # Coming soon...
+
+      .. py:property:: traceback
+
+         # Coming soon...
+
 Examples
 --------
 
 .. code-block:: python
 
-    from parallelism import task_scheduler
+   # Built-in modules
+   from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
+   from multiprocessing import Process
+   from threading import Thread
 
-    # Coming soon...
+   # Third-party packages
+   from parallelism import scheduled_task, task_scheduler
 
 Example of ...:
 
