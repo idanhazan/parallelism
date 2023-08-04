@@ -69,6 +69,8 @@ An example of basic usage for creating a `ScheduledTask` instance:
 >>> p = scheduled_task(Process, 'p', func)
 >>> t = scheduled_task(Thread, 't', func)
 
+In this case, both `p` and `t` will be the same except that `p` will run as `multiprocessing.Process` and `t` will run as `threading.Thread`
+
 Parameters
 **********
 
@@ -83,7 +85,7 @@ An example of basic usage for `args` and `kwargs`:
 >>> p = scheduled_task(Process, 'p', func1, args=(1, 2), kwargs={'c': 3})
 >>> t = scheduled_task(Thread, 't', func2, kwargs={'x': p.return_value})
 
-In such case, `t` will start only after `p` completed, and the parameter `x` will be equal to `6`
+In this case, `t` will start only after `p` completed, and the parameter `x` will be equal to `6`
 
 Dependencies
 ************
@@ -99,7 +101,7 @@ An example of basic usage for `dependencies`:
 >>> p = scheduled_task(Process, 'p', func1)
 >>> t = scheduled_task(Thread, 't', func2, dependencies=(p,))
 
-In such case, `t` will start only after `p` completed
+In this case, `t` will start only after `p` completed
 
 Priorities
 **********
@@ -112,7 +114,7 @@ An example of basic usage for `priority`:
 >>> p = scheduled_task(Process, 'p', func, priority=2)
 >>> t = scheduled_task(Thread, 't', func, priority=1)
 
-In such case, `t` will be prioritize over `p`
+In this case, `t` will be prioritize over `p`
 
 Workers
 *******
@@ -127,4 +129,17 @@ An example of basic usage for `processes` and `threads`:
 ...
 >>> p = scheduled_task(Process, 'p', func, processes=2, threads=4)
 
-In such case, 'p' will get additional weight of number of processes and threads
+In this case, 'p' will get additional weight of number of processes and threads
+
+Continuity
+**********
+
+An example of basic usage for `continual`:
+
+>>> def func():
+...     return 123
+...
+>>> p = scheduled_task(Process, 'p', func, continual=True)
+>>> t = scheduled_task(Thread, 't', func, continual=False)
+
+In this case, when the task scheduler will complete, it will store only the return value of `p`
