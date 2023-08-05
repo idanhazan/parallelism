@@ -34,7 +34,7 @@ def func(*args, **kwargs):
     pass
 ```
 
-3. Create task instances using the `func` function, specifying the execution unit (Process or Thread), task name, function, and positional arguments or keyword arguments:
+3. Create task instances using the `scheduled_task` function, specifying the execution unit (Process or Thread), task name, function, and positional arguments or keyword arguments:
 
 ```python
 task1 = scheduled_task(Process, 'task1', func, args=(...))
