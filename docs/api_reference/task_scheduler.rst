@@ -118,7 +118,132 @@ Examples
    # Third-party packages
    from parallelism import scheduled_task, task_scheduler
 
-Example of ...:
+Args & Kwargs
+*************
 
->>> task_scheduler(...)
+This example highlights the utilization of args and kwargs by creating and scheduling tasks that accept various arguments and keyword arguments.
+Process and thread tasks demonstrate concurrent execution while the task_scheduler efficiently manages resource allocation, showcasing the flexibility and power of parameter passing.
+
+>>> def func1(a, b, c):
+...     print(f'func1(a={a}, b={b}, c={c})\n', end='')
+...     return a + b + c
 ...
+>>> def func2(x):
+...     print(f'func2(x={x})\n', end='')
+...     return x
+...
+>>> p1 = scheduled_task(Process, 'p1', func1, args=(1, 2, 3))
+>>> p2 = scheduled_task(Process, 'p2', func1, args=(4, 5, 6))
+>>> p3 = scheduled_task(Process, 'p3', func1, args=(7, 8, 9))
+>>> t1 = scheduled_task(Thread, 't1', func2, kwargs={'x': p1.return_value})
+>>> t2 = scheduled_task(Thread, 't2', func2, kwargs={'x': p2.return_value})
+>>> t3 = scheduled_task(Thread, 't3', func2, kwargs={'x': p3.return_value})
+>>> p4 = scheduled_task(Process, 'p4', func1, args=(t1.return_value, t2.return_value, t3.return_value))
+>>> t4 = scheduled_task(Thread, 't4', func2, kwargs={'x': p4.return_value})
+>>> s1 = task_scheduler(tasks=(p1, p2, p3, p4, t1, t2, t3, t4), processes=2, threads=2)
+func1(a=1, b=2, c=3)    # Task 'p1' has been started
+func1(a=4, b=5, c=6)    # Task 'p2' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p1' ran approximately ... nanoseconds
+func1(a=7, b=8, c=9)    # Task 'p3' has been started
+func2(x=6)              # Task 't1' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p2' ran approximately ... nanoseconds
+func2(x=15)             # Task 't2' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p3' ran approximately ... nanoseconds
+func2(x=24)             # Task 't3' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't1' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't2' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't3' ran approximately ... nanoseconds
+func1(a=6, b=15, c=24)  # Task 'p4' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p4' ran approximately ... nanoseconds
+func2(x=45)             # Task 't4' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
+
+Other
+*****
+
+>>> from operator import add, mul
+...
+>>> def func1(operator, a, b):
+...     return operator(a, b)
+...
+>>> def func2(value):
+...     return str(value)
+...
+>>> def func3(values):
+...     return sorted(values)
+...
+>>> p1 = scheduled_task(Process, 'p1', func1, (add, 3, 1), priority=1)
+>>> p2 = scheduled_task(Process, 'p2', func1, (mul, 3, 1), priority=3)
+>>> p3 = scheduled_task(Process, 'p3', func1, (add, 3, 'w'), priority=2)
+>>> p4 = scheduled_task(Process, 'p4', func1, (mul, 3, 'w'), priority=4)
+...
+>>> t1 = scheduled_task(Thread, 't1', func2, (p1.return_value,), continual=True)
+>>> t2 = scheduled_task(Thread, 't2', func2, (p2.return_value,), continual=True)
+>>> t3 = scheduled_task(Thread, 't3', func2, (p3.return_value,), continual=True)
+>>> t4 = scheduled_task(Thread, 't4', func2, (p4.return_value,), continual=True)
+...
+>>> s1 = task_scheduler(tasks=(p1, p2, p3, p4, t1, t2, t3, t4), processes=2, threads=2)
+...
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p1' ran approximately ... nanoseconds
+TIMESTAMP [ERROR] [parallelism:PID:TID] - 'p3' ran approximately ... milliseconds - TypeError("unsupported operand type(s) for +: 'int' and 'str'")
+TIMESTAMP [WARNING] [parallelism:PID:TID] - 't3' is being canceled, due to task 'p3'
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p2' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't1' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p4' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't2' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
+...
+>>> s1.execution_time
+{
+    'p1': datetime.datetime(...),
+    'p3': datetime.datetime(...),
+    't3': datetime.datetime(...),
+    'p2': datetime.datetime(...),
+    't1': datetime.datetime(...),
+    'p4': datetime.datetime(...),
+    't2': datetime.datetime(...),
+    't4': datetime.datetime(...),
+}
+>>> s1.elapsed_time
+{
+    'p1': ...,
+    'p3': ...,
+    'p2': ...,
+    't1': ...,
+    'p4': ...,
+    't2': ...,
+    't4': ...,
+}
+>>> s1.raise_exception
+{
+    'p3': TypeError("unsupported operand type(s) for +: 'int' and 'str'"),
+    't3': DependencyError("'t3' has been canceled", ('p3',)),
+}
+>>> s1.return_value
+{
+    't1': '4',
+    't2': '3',
+    't4': 'www',
+}
+...
+>>> p5 = scheduled_task(Process, 'p5', func3, (s1.return_value.values(),), continual=True)
+...
+>>> s2 = task_scheduler(tasks=(p5,), processes=1, threads=0)
+...
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p5' ran approximately ... milliseconds
+...
+>>> s2.execution_time
+{
+    'p5': datetime.datetime(...),
+}
+>>> s2.elapsed_time
+{
+    'p5': ...,
+}
+>>> s2.raise_exception
+{
+}
+>>> s2.return_value
+{
+    'p5': ['3', '4', 'www'],
+}
