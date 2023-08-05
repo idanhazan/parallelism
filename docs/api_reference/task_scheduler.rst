@@ -191,18 +191,18 @@ TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
 ...
 TIMESTAMP [INFO] [parallelism:PID:TID] - 'p5' ran approximately ... milliseconds
 ...
->>> s1.execution_time
+>>> s2.execution_time
 {
     'p5': datetime.datetime(...),
 }
->>> s1.elapsed_time
+>>> s2.elapsed_time
 {
     'p5': ...,
 }
->>> s1.raise_exception
+>>> s2.raise_exception
 {
 }
->>> s1.return_value
+>>> s2.return_value
 {
     'p5': ['3', '4', 'www'],
 }
