@@ -207,11 +207,11 @@ TIMESTAMP [INFO] [parallelism:PID:TID]    - 't4' ran approximately ... nanosecon
 }
 >>> s1.elapsed_time
 {
-    'p1': ...,
-    'p2': ...,
-    'p4': ...,
-    't1': ...,
-    't4': ...,
+    'p1': float(...),
+    'p2': float(...),
+    'p4': float(...),
+    't1': float(...),
+    't4': float(...),
 }
 >>> s1.raise_exception
 {
