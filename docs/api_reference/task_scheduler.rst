@@ -140,21 +140,21 @@ It creates and schedules process and thread tasks, demonstrating their concurren
 >>> p4 = scheduled_task(Process, 'p4', func1, args=(t1.return_value, t2.return_value, t3.return_value))
 >>> t4 = scheduled_task(Thread, 't4', func2, kwargs={'x': p4.return_value})
 >>> s1 = task_scheduler(tasks=(p1, p2, p3, t1, t2, t3, p4, t4), processes=2, threads=2)
-func1(a=1, b=2, c=3)    # Task 'p1' has been started
-func1(a=4, b=5, c=6)    # Task 'p2' has been started
+func1(a=1, b=2, c=3)                   # Task 'p1' has been started
+func1(a=4, b=5, c=6)                   # Task 'p2' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 'p1' ran approximately ... nanoseconds
-func1(a=7, b=8, c=9)    # Task 'p3' has been started
-func2(x=6)              # Task 't1' has been started
+func1(a=7, b=8, c=9)                   # Task 'p3' has been started
+func2(x=6)                             # Task 't1' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 'p2' ran approximately ... nanoseconds
-func2(x=15)             # Task 't2' has been started
+func2(x=15)                            # Task 't2' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 'p3' ran approximately ... nanoseconds
-func2(x=24)             # Task 't3' has been started
+func2(x=24)                            # Task 't3' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 't1' ran approximately ... nanoseconds
 TIMESTAMP [INFO] [parallelism:PID:TID] - 't2' ran approximately ... nanoseconds
 TIMESTAMP [INFO] [parallelism:PID:TID] - 't3' ran approximately ... nanoseconds
-func1(a=6, b=15, c=24)  # Task 'p4' has been started
+func1(a=6, b=15, c=24)                 # Task 'p4' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 'p4' ran approximately ... nanoseconds
-func2(x=45)             # Task 't4' has been started
+func2(x=45)                            # Task 't4' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
 
 Results
@@ -183,17 +183,17 @@ The subsequent retrieval of execution details and results offers insights into t
 >>> s1 = task_scheduler(tasks=(p1, p2, p3, p4, t1, t2, t3, t4), processes=2, threads=2)
 TIMESTAMP [WARNING] [parallelism:PID:TID] - 'p3' is being canceled, due to lack of 1 process
 TIMESTAMP [WARNING] [parallelism:PID:TID] - 't3' is being canceled, due to task 'p3'
-func1(a=5, b=2)    # Task 'p1' has been started
-func1(a=3, b=0)    # Task 'p2' has been started
-TIMESTAMP [INFO] [parallelism:PID:TID] - 'p1' ran approximately ... nanoseconds
-func1(a=7, b=2)    # Task 'p4' has been started
-func2(x=2.5)       # Task 't1' has been started
-TIMESTAMP [ERROR] [parallelism:PID:TID] - 'p2' ran approximately ... microseconds - ZeroDivisionError('division by zero')
+func1(a=5, b=2)                           # Task 'p1' has been started
+func1(a=3, b=0)                           # Task 'p2' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID]    - 'p1' ran approximately ... nanoseconds
+func1(a=7, b=2)                           # Task 'p4' has been started
+func2(x=2.5)                              # Task 't1' has been started
+TIMESTAMP [ERROR] [parallelism:PID:TID]   - 'p2' ran approximately ... microseconds - ZeroDivisionError('division by zero')
 TIMESTAMP [WARNING] [parallelism:PID:TID] - 't2' is being canceled, due to task 'p2'
-TIMESTAMP [INFO] [parallelism:PID:TID] - 'p4' ran approximately ... nanoseconds
-func2(x=3.5)       # Task 't4' has been started
-TIMESTAMP [INFO] [parallelism:PID:TID] - 't1' ran approximately ... nanoseconds
-TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID]    - 'p4' ran approximately ... nanoseconds
+func2(x=3.5)                              # Task 't4' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID]    - 't1' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID]    - 't4' ran approximately ... nanoseconds
 >>> s1.execution_time
 {
     'p3': datetime.datetime(...),
