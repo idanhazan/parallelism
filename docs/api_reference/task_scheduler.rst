@@ -134,17 +134,12 @@ Process and thread tasks demonstrate concurrent execution while the task_schedul
 >>> p1 = scheduled_task(Process, 'p1', func1, args=(1, 2, 3))
 >>> p2 = scheduled_task(Process, 'p2', func1, args=(4, 5, 6))
 >>> p3 = scheduled_task(Process, 'p3', func1, args=(7, 8, 9))
-...
 >>> t1 = scheduled_task(Thread, 't1', func2, kwargs={'x': p1.return_value})
 >>> t2 = scheduled_task(Thread, 't2', func2, kwargs={'x': p2.return_value})
 >>> t3 = scheduled_task(Thread, 't3', func2, kwargs={'x': p3.return_value})
-...
 >>> p4 = scheduled_task(Process, 'p4', func1, args=(t1.return_value, t2.return_value, t3.return_value))
-...
 >>> t4 = scheduled_task(Thread, 't4', func2, kwargs={'x': p4.return_value})
-...
 >>> s1 = task_scheduler(tasks=(p1, p2, p3, t1, t2, t3, t4, p4, t4), processes=2, threads=2)
-...
 func1(a=1, b=2, c=3)    # Task 'p1' has been started
 func1(a=4, b=5, c=6)    # Task 'p2' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 'p1' ran approximately ... nanoseconds
