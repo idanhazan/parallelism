@@ -47,11 +47,14 @@ class FunctionHandler:
             self.proxy['return_value'] = self.target(*args, **kwargs)
             self.proxy['complete'] = True
         except Exception as exception:
-            self.proxy['raise_exception'] = RaiseException(exception, format_exc())
+            self.proxy['raise_exception'] = RaiseException(
+                exception=exception,
+                traceback=format_exc(),
+            )
         finally:
             end = time()
-            self.proxy['finish'] = True
             self.proxy['elapsed_time'] = end - start
+            self.proxy['finish'] = True
             self.log_current_state()
 
     def log_current_state(

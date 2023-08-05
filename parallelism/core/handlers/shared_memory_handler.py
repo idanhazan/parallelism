@@ -43,9 +43,9 @@ class SharedMemoryHandler:
             self.prerequisites_been_initialized(task)
         ):
             self.execution_time[task.name] = proxy.get('execution_time')
-            if proxy.get('elapsed_time'):
+            if proxy.get('elapsed_time') is not None:
                 self.elapsed_time[task.name] = proxy.get('elapsed_time')
-            if proxy.get('raise_exception'):
+            if proxy.get('raise_exception') is not None:
                 self.raise_exception[task.name] = proxy.get('raise_exception')
             elif task.continual:
                 self.return_value[task.name] = proxy.get('return_value')
