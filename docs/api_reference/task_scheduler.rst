@@ -118,7 +118,52 @@ Examples
    # Third-party packages
    from parallelism import scheduled_task, task_scheduler
 
-Example #1:
+Args & Kwargs
+*************
+
+This example highlights the utilization of args and kwargs by creating and scheduling tasks that accept various arguments and keyword arguments.
+Process and thread tasks demonstrate concurrent execution while the task_scheduler efficiently manages resource allocation, showcasing the flexibility and power of parameter passing.
+
+>>> def func1(a, b, c):
+...     print(f'func1(a={a}, b={b}, c={c})\n', end='')
+...     return a + b + c
+...
+>>> def func2(x):
+...     print(f'func2(x={x})\n', end='')
+...
+>>> p1 = scheduled_task(Process, 'p1', func1, args=(1, 2, 3))
+>>> p2 = scheduled_task(Process, 'p2', func1, args=(4, 5, 6))
+>>> p3 = scheduled_task(Process, 'p3', func1, args=(7, 8, 9))
+...
+>>> t1 = scheduled_task(Thread, 't1', func2, kwargs={'x': p1.return_value})
+>>> t2 = scheduled_task(Thread, 't2', func2, kwargs={'x': p2.return_value})
+>>> t3 = scheduled_task(Thread, 't3', func2, kwargs={'x': p3.return_value})
+...
+>>> p4 = scheduled_task(Process, 'p4', func1, args=(t1.return_value, t2.return_value, t3.return_value))
+...
+>>> t4 = scheduled_task(Thread, 't4', func2, kwargs={'x': p4.return_value})
+...
+>>> s1 = task_scheduler(tasks=(p1, p2, p3, t1, t2, t3, t4, p4, t4), processes=2, threads=2)
+...
+func1(a=1, b=2, c=3)    # Task 'p1' has been started
+func1(a=4, b=5, c=6)    # Task 'p2' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p1' ran approximately ... nanoseconds
+func1(a=7, b=8, c=9)    # Task 'p3' has been started
+func2(x=6)              # Task 't1' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p2' ran approximately ... nanoseconds
+func2(x=15)             # Task 't2' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p3' ran approximately ... nanoseconds
+func2(x=24)             # Task 't3' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't1' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't2' ran approximately ... nanoseconds
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't3' ran approximately ... nanoseconds
+func1(a=6, b=15, c=24)  # Task 'p4' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 'p4' ran approximately ... nanoseconds
+func2(x=45)             # Task 't4' has been started
+TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
+
+Other
+*****
 
 >>> from operator import add, mul
 ...
