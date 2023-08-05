@@ -1,7 +1,9 @@
 parallelism
 ==========
 
-Empowering workflows with parallelism
+Experience efficient and parallel task execution using processes and threads with the Parallelism library.
+Seamlessly distribute tasks, optimize CPU-bound and I/O-bound operations, and ensure resource-efficient management.
+Elevate your code's performance by leveraging the library's flexible framework, enabling streamlined computation, adaptive responsiveness, and optimal resource allocation for diverse workloads.
 
 Information
 -----------
