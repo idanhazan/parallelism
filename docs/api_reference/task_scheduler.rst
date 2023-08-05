@@ -185,7 +185,7 @@ TIMESTAMP [INFO] [parallelism:PID:TID] - 'p1' ran approximately ... nanoseconds
 func1(a=7, b=2)    # Task 'p4' has been started
 func2(x=2.5)       # Task 't1' has been started
 TIMESTAMP [ERROR] [parallelism:PID:TID] - 'p2' ran approximately ... microseconds - ZeroDivisionError('division by zero')
-TIMESTAMP [INFO] [parallelism:PID:TID] - 't2' is being canceled, due to task 'p2'
+TIMESTAMP [WARNING] [parallelism:PID:TID] - 't2' is being canceled, due to task 'p2'
 TIMESTAMP [INFO] [parallelism:PID:TID] - 'p4' ran approximately ... nanoseconds
 func2(x=3.5)       # Task 't4' has been started
 TIMESTAMP [INFO] [parallelism:PID:TID] - 't1' ran approximately ... nanoseconds
