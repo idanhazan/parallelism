@@ -160,6 +160,10 @@ TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
 Results
 *******
 
+This illustrative code demonstrates how to effectively use the `task_scheduler` to manage concurrent task execution and retrieve outcomes.
+It showcases the orchestration of process and thread tasks, while the task scheduler handles resource allocation.
+The subsequent retrieval of execution details and results offers insights into the parallel task execution process.
+
 >>> def func1(a, b):
 ...     print(f'func1(a={a}, b={b})\n', end='')
 ...     return a / b
@@ -170,14 +174,14 @@ Results
 ...
 >>> p1 = scheduled_task(Process, 'p1', func1, (5, 2))
 >>> p2 = scheduled_task(Process, 'p2', func1, (3, 0))
->>> p3 = scheduled_task(Process, 'p3', func1, (9, 0), processes=2, threads=4)
+>>> p3 = scheduled_task(Process, 'p3', func1, (9, 0), processes=2)
 >>> p4 = scheduled_task(Process, 'p4', func1, (7, 2))
 >>> t1 = scheduled_task(Thread, 't1', func2, (p1.return_value,), continual=True)
 >>> t2 = scheduled_task(Thread, 't2', func2, (p2.return_value,), continual=True)
 >>> t3 = scheduled_task(Thread, 't3', func2, (p3.return_value,), continual=True)
 >>> t4 = scheduled_task(Thread, 't4', func2, (p4.return_value,), continual=True)
 >>> s1 = task_scheduler(tasks=(p1, p2, p3, p4, t1, t2, t3, t4), processes=2, threads=2)
-TIMESTAMP [WARNING] [parallelism:PID:TID] - 'p3' is being canceled, due to lack of 1 process and also 2 threads
+TIMESTAMP [WARNING] [parallelism:PID:TID] - 'p3' is being canceled, due to lack of 1 process
 TIMESTAMP [WARNING] [parallelism:PID:TID] - 't3' is being canceled, due to task 'p3'
 func1(a=5, b=2)    # Task 'p1' has been started
 func1(a=3, b=0)    # Task 'p2' has been started
@@ -211,7 +215,7 @@ TIMESTAMP [INFO] [parallelism:PID:TID] - 't4' ran approximately ... nanoseconds
 }
 >>> s1.raise_exception
 {
-    'p3': WorkerError("'p3' has been canceled", (1, 2)),
+    'p3': WorkerError("'p3' has been canceled", (1, 0)),
     't3': DependencyError("'t3' has been canceled", ('p3',)),
     'p2': ZeroDivisionError('division by zero'),
     't2': DependencyError("'t3' has been canceled", ('p2',)),
