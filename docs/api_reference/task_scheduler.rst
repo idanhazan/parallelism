@@ -130,6 +130,7 @@ Process and thread tasks demonstrate concurrent execution while the task_schedul
 ...
 >>> def func2(x):
 ...     print(f'func2(x={x})\n', end='')
+...     return x
 ...
 >>> p1 = scheduled_task(Process, 'p1', func1, args=(1, 2, 3))
 >>> p2 = scheduled_task(Process, 'p2', func1, args=(4, 5, 6))
