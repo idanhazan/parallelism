@@ -176,7 +176,7 @@ The subsequent retrieval of execution details and results offers insights into t
 >>> p2 = scheduled_task(Process, 'p2', func1, (6, 0))
 >>> p3 = scheduled_task(Process, 'p3', func1, (6, 0), processes=2)
 >>> p4 = scheduled_task(Process, 'p4', func1, (6, 0), system_processor=12.6, system_memory=34.7)
->>> p5 = scheduled_task(Process, 'p4', func1, (7, 2))
+>>> p5 = scheduled_task(Process, 'p5', func1, (7, 2))
 >>> t1 = scheduled_task(Thread, 't1', func2, (p1.return_value,), continual=True)
 >>> t2 = scheduled_task(Thread, 't2', func2, (p2.return_value,), continual=True)
 >>> t3 = scheduled_task(Thread, 't3', func2, (p3.return_value,), continual=True)
