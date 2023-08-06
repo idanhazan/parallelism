@@ -218,7 +218,7 @@ TIMESTAMP [INFO] [parallelism:PID:TID]    - 't4' ran approximately ... nanosecon
     'p3': WorkerError("'p3' has been canceled", (1, 0)),
     't3': DependencyError("'t3' has been canceled", ('p3',)),
     'p2': ZeroDivisionError('division by zero'),
-    't2': DependencyError("'t3' has been canceled", ('p2',)),
+    't2': DependencyError("'t2' has been canceled", ('p2',)),
 }
 >>> s1.return_value
 {
