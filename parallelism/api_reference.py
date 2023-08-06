@@ -68,13 +68,13 @@ def scheduled_task(
     threads : int, default 0
         | The number of threads to be allocated by the `target` function.
     system_processor : int or float, default 0
-        | Estimate of the percentage of system processor usage (0 to 100).
+        | Estimate of the percentage of system processor usage.
     system_memory : int or float, default 0
-        | Estimate of the percentage of system memory usage (0 to 100).
+        | Estimate of the percentage of system memory usage.
     graphics_processor : int or float, default 0
-        | Estimate of the percentage of graphics processor usage (0 to 100).
+        | Estimate of the percentage of graphics processor usage.
     graphics_memory : int or float, default 0
-        | Estimate of the percentage of graphics processor usage (0 to 100).
+        | Estimate of the percentage of graphics memory usage.
     continual : bool, default False
         | A flag indicating whether the task scheduler should store the result
         of the task after completion. If `True`, the result is stored for later
@@ -209,13 +209,13 @@ def task_scheduler(
         | Specifies the total number of parallel threads available for
         executing all tasks collectively.
     system_processor : int or float, default 100
-        | Maximum allowed system processor usage (0 to 100).
+        | Maximum allowed system processor usage (percentage).
     system_memory : int or float, default 100
-        | Maximum allowed system memory usage (0 to 100).
+        | Maximum allowed system memory usage (percentage).
     graphics_processor : int or float, default 100
-        | Maximum allowed graphics processor usage (0 to 100).
+        | Maximum allowed graphics processor usage (percentage).
     graphics_memory : int or float, default 100
-        | Maximum allowed graphics memory usage (0 to 100).
+        | Maximum allowed graphics memory usage (percentage).
 
     Returns
     -------
