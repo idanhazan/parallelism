@@ -4,17 +4,24 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = 'parallelism'
-description = 'Empowering workflows with parallelism'
+description = 'Enhance Parallel Task Execution'
 readme = 'README.md'
 license = {text = 'MIT'}
 authors = [{name = 'Idan Hazan'}]
-keywords= ['parallelism', 'parallel', 'task', 'scheduler']
+keywords= ['parallelism', 'parallel', 'scheduled', 'task', 'scheduler']
 classifiers = [
-    'Programming Language :: Python :: 3',
+    'Environment :: Console',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Topic :: Software Development :: Libraries :: Python Modules',
 ]
-requires-python = '>= 3.11'
+requires-python = '>= 3.8'
 dynamic = ['version']
 
 [project.urls]
