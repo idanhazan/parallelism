@@ -187,6 +187,23 @@ Here, `scheduled_task` is used to distribute workload across processes and threa
 ...
 >>> p = scheduled_task(Process, 'p', func, processes=2, threads=4)
 
+Processor & Memory
+******************
+
+Resource Usage Estimation:
+
+In the following use cases, the `scheduled_task` function incorporates the estimation of system resources to enhance task execution efficiency.
+The parameters `system_processor`, `system_memory`, `graphics_processor`, and `graphics_memory` allow you to specify the estimated resource usage for each task,
+ensuring optimized resource allocation within the system.
+
+By estimating 60.5% system processor and 75% system memory usage, these tasks are unable to run concurrently due to resource limitations.
+
+>>> def func():
+...     pass
+...
+>>> p = scheduled_task(Process, 'p', func, system_processor=60.5, system_memory=75)
+>>> t = scheduled_task(Thread, 't', func, system_processor=60.5, system_memory=75)
+
 Continual
 *********
 
