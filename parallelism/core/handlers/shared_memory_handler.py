@@ -59,6 +59,10 @@ class SharedMemoryHandler:
                 priority=task.priority,
                 processes=task.processes,
                 threads=task.threads,
+                system_processor=task.system_processor,
+                system_memory=task.system_memory,
+                graphics_processor=task.graphics_processor,
+                graphics_memory=task.graphics_memory,
                 continual=task.continual,
                 initialized=task.initialized,
             )

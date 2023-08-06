@@ -27,6 +27,10 @@ class ScheduledTask(NamedTuple):
     priority: Union[int, float]
     processes: int
     threads: int
+    system_processor: Union[int, float]
+    system_memory: Union[int, float]
+    graphics_processor: Union[int, float]
+    graphics_memory: Union[int, float]
     continual: bool
     initialized: bool
 
@@ -47,6 +51,10 @@ class ScheduledTask(NamedTuple):
             'priority={!r}'.format(self.priority),
             'processes={!r}'.format(self.processes),
             'threads={!r}'.format(self.threads),
+            'system_processor={!r}'.format(self.system_processor),
+            'system_memory={!r}'.format(self.system_memory),
+            'graphics_processor={!r}'.format(self.graphics_processor),
+            'graphics_memory={!r}'.format(self.graphics_memory),
             'continual={!r}'.format(self.continual),
         )
         parameters = ', '.join(parameters)

@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from parallelism.config import DECIMAL_PRECISION, DECIMAL_ROUNDING_MODE
 from parallelism.core.exceptions.dependency_error import DependencyError
+from parallelism.core.exceptions.resource_error import ResourceError
 from parallelism.core.exceptions.worker_error import WorkerError
 from parallelism.core.raise_exception import RaiseException
 from parallelism.logger import get_logger
@@ -83,6 +84,70 @@ class FunctionHandler:
             exception = DependencyError(
                 message='{!r} has been canceled'.format(name),
                 tasks=blocker.get('tasks'),
+            )
+            self.proxy['raise_exception'] = RaiseException(exception)
+            self.proxy['finish'] = True
+            logger.warning(msg=message)
+        elif blocker and blocker.get('reason') == 'resource':
+            sp = blocker.get('system_processor')
+            sm = blocker.get('system_memory')
+            gp = blocker.get('graphics_processor')
+            gm = blocker.get('graphics_memory')
+            pattern = '{!r} is being canceled, due to lack of '
+            if sp and sm and gp and gm:
+                pattern += '{!r}% CPU, {!r}% RAM, {!r}% GPU, and {!r}% VRAM'
+                message = pattern.format(name, sp, sm, gp, gm)
+            elif sp and sm and gp:
+                pattern += '{!r}% CPU, {!r}% RAM, and {!r}% GPU'
+                message = pattern.format(name, sp, sm, gp)
+            elif sp and sm and gm:
+                pattern += '{!r}% CPU, {!r}% RAM, and {!r}% VRAM'
+                message = pattern.format(name, sp, sm, gm)
+            elif sp and sm:
+                pattern += '{!r}% CPU and {!r}% RAM'
+                message = pattern.format(name, sp, sm)
+            elif sp and gp and gm:
+                pattern += '{!r}% CPU, {!r}% GPU, and {!r}% VRAM'
+                message = pattern.format(name, sp, gp, gm)
+            elif sp and gp:
+                pattern += '{!r}% CPU and {!r}% GPU'
+                message = pattern.format(name, sp, gp)
+            elif sp and gm:
+                pattern += '{!r}% CPU and {!r}% VRAM'
+                message = pattern.format(name, sp, gm)
+            elif sp:
+                pattern += '{!r}% CPU'
+                message = pattern.format(name, sp)
+            elif sm and gp and gm:
+                pattern += '{!r}% RAM, {!r}% GPU, and {!r}% VRAM'
+                message = pattern.format(name, sm, gp, gm)
+            elif sm and gp:
+                pattern += '{!r}% RAM and {!r}% GPU'
+                message = pattern.format(name, sm, gp)
+            elif sm and gm:
+                pattern += '{!r}% RAM and {!r}% VRAM'
+                message = pattern.format(name, sm, gm)
+            elif sm:
+                pattern += '{!r}% RAM'
+                message = pattern.format(name, sm)
+            elif gp and gm:
+                pattern += '{!r}% GPU and {!r}% VRAM'
+                message = pattern.format(name, gp, gm)
+            elif gp:
+                pattern += '{!r}% GPU'
+                message = pattern.format(name, gp)
+            elif gm:
+                pattern += '{!r}% VRAM'
+                message = pattern.format(name, gm)
+            else:
+                pattern += 'resources (CPU / RAM / GPU / VRAM)'
+                message = pattern.format(name)
+            exception = ResourceError(
+                message='{!r} has been canceled'.format(name),
+                system_processor=sp,
+                system_memory=sm,
+                graphics_processor=gp,
+                graphics_memory=gm,
             )
             self.proxy['raise_exception'] = RaiseException(exception)
             self.proxy['finish'] = True

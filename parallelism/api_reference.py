@@ -30,6 +30,10 @@ def scheduled_task(
     priority: Union[int, float] = None,
     processes: int = 0,
     threads: int = 0,
+    system_processor: Union[int, float] = 0,
+    system_memory: Union[int, float] = 0,
+    graphics_processor: Union[int, float] = 0,
+    graphics_memory: Union[int, float] = 0,
     continual: bool = False,
 ) -> ScheduledTask:
     """
@@ -58,16 +62,23 @@ def scheduled_task(
         order.
     priority : int or float, optional
         | Priority level of task execution, influencing the order of execution
-        among tasks.
-        | Lower values indicate higher priority.
+        among tasks. Lower values indicate higher priority.
     processes : int, default 0
         | The number of processes to be allocated by the `target` function.
     threads : int, default 0
         | The number of threads to be allocated by the `target` function.
+    system_processor : int or float, default 0
+        | Estimate of the percentage of system processor usage (0 to 100).
+    system_memory : int or float, default 0
+        | Estimate of the percentage of system memory usage (0 to 100).
+    graphics_processor : int or float, default 0
+        | Estimate of the percentage of graphics processor usage (0 to 100).
+    graphics_memory : int or float, default 0
+        | Estimate of the percentage of graphics processor usage (0 to 100).
     continual : bool, default False
         | A flag indicating whether the task scheduler should store the result
-        of the task after completion.
-        | If `True`, the result is stored for later access.
+        of the task after completion. If `True`, the result is stored for later
+        access.
 
     Returns
     -------
@@ -119,6 +130,30 @@ def scheduled_task(
     if threads < 0:
         pattern = 'The {!r} parameter should be an integer >= {!r}'
         raise TypeError(pattern.format('threads', 0))
+    if not isinstance(system_processor, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('system_processor', 'int or float'))
+    if system_processor < 0 or system_processor > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('system_processor', 0, 100))
+    if not isinstance(system_memory, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('system_memory', 'int or float'))
+    if system_memory < 0 or system_memory > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('system_memory', 0, 100))
+    if not isinstance(graphics_processor, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('graphics_processor', 'int or float'))
+    if graphics_processor < 0 or graphics_processor > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('graphics_processor', 0, 100))
+    if not isinstance(graphics_memory, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('graphics_memory', 'int or float'))
+    if graphics_memory < 0 or graphics_memory > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('graphics_memory', 0, 100))
     if not isinstance(continual, bool):
         pattern = 'The {!r} parameter should be of type {!r}'
         raise TypeError(pattern.format('continual', 'bool'))
@@ -136,6 +171,10 @@ def scheduled_task(
         priority=priority,
         processes=processes,
         threads=threads,
+        system_processor=system_processor,
+        system_memory=system_memory,
+        graphics_processor=graphics_processor,
+        graphics_memory=graphics_memory,
         continual=continual,
         initialized=False,
     )
@@ -146,6 +185,10 @@ def task_scheduler(
     *,
     processes: int = None,
     threads: int = None,
+    system_processor: Union[int, float] = 100,
+    system_memory: Union[int, float] = 100,
+    graphics_processor: Union[int, float] = 100,
+    graphics_memory: Union[int, float] = 100,
 ) -> SchedulerResult:
     """
     The `task_scheduler` function orchestrates the simultaneous execution of
@@ -165,6 +208,14 @@ def task_scheduler(
     threads : int, default os.cpu_count()
         | Specifies the total number of parallel threads available for
         executing all tasks collectively.
+    system_processor : int or float, default 100
+        | Maximum allowed system processor usage (0 to 100).
+    system_memory : int or float, default 100
+        | Maximum allowed system memory usage (0 to 100).
+    graphics_processor : int or float, default 100
+        | Maximum allowed graphics processor usage (0 to 100).
+    graphics_memory : int or float, default 100
+        | Maximum allowed graphics memory usage (0 to 100).
 
     Returns
     -------
@@ -202,5 +253,37 @@ def task_scheduler(
     if threads < 0:
         pattern = 'The {!r} parameter should be an integer >= {!r}'
         raise TypeError(pattern.format('threads', 0))
-    scheduler = TaskScheduler(tasks, processes, threads)
+    if not isinstance(system_processor, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('system_processor', 'int or float'))
+    if system_processor < 0 or system_processor > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('system_processor', 0, 100))
+    if not isinstance(system_memory, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('system_memory', 'int or float'))
+    if system_memory < 0 or system_memory > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('system_memory', 0, 100))
+    if not isinstance(graphics_processor, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('graphics_processor', 'int or float'))
+    if graphics_processor < 0 or graphics_processor > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('graphics_processor', 0, 100))
+    if not isinstance(graphics_memory, (int, float)):
+        pattern = 'The {!r} parameter should be of type {!r}'
+        raise TypeError(pattern.format('graphics_memory', 'int or float'))
+    if graphics_memory < 0 or graphics_memory > 100:
+        pattern = 'The {!r} parameter should be between {!r} and {!r}'
+        raise TypeError(pattern.format('graphics_memory', 0, 100))
+    scheduler = TaskScheduler(
+        tasks=tasks,
+        processes=processes,
+        threads=threads,
+        system_processor=system_processor,
+        system_memory=system_memory,
+        graphics_processor=graphics_processor,
+        graphics_memory=graphics_memory,
+    )
     return scheduler.execute()

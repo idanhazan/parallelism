@@ -7,12 +7,14 @@ from typing import TYPE_CHECKING
 from parallelism.core.handlers.dependency_handler import DependencyHandler
 from parallelism.core.handlers.function_handler import FunctionHandler
 from parallelism.core.handlers.parameters_handler import ParametersHandler
+from parallelism.core.handlers.resource_handler import ResourceHandler
 from parallelism.core.handlers.shared_memory_handler import SharedMemoryHandler
+from parallelism.core.handlers.worker_handler import WorkerHandler
 from parallelism.core.scheduled_task import ScheduledTask
 from parallelism.core.scheduler_result import SchedulerResult
 
 if TYPE_CHECKING:
-    from typing import Literal, Tuple
+    from typing import Literal, Tuple, Union
 
 __all__ = ('TaskScheduler',)
 
@@ -23,8 +25,14 @@ class TaskScheduler:
         'returns',
         'processes',
         'threads',
+        'system_processor',
+        'system_memory',
+        'graphics_processor',
+        'graphics_memory',
         'manager',
         'proxy',
+        'worker_handler',
+        'resource_handler',
         'dependency_handler',
         'shared_memory_handler',
     )
@@ -34,12 +42,22 @@ class TaskScheduler:
         tasks: Tuple[ScheduledTask, ...],
         processes: int,
         threads: int,
+        system_processor: Union[int, float],
+        system_memory: Union[int, float],
+        graphics_processor: Union[int, float],
+        graphics_memory: Union[int, float],
     ) -> None:
         self.tasks = sorted(tasks, key=lambda task: task.priority)
         self.processes = processes
         self.threads = threads
+        self.system_processor = system_processor
+        self.system_memory = system_memory
+        self.graphics_processor = graphics_processor
+        self.graphics_memory = graphics_memory
         self.manager = None
         self.proxy = None
+        self.worker_handler = None
+        self.resource_handler = None
         self.dependency_handler = None
         self.shared_memory_handler = None
 
@@ -51,34 +69,23 @@ class TaskScheduler:
             for task in self.tasks
         )
 
-    @property
-    def active_tasks(self) -> Tuple[ScheduledTask, ...]:
-        return tuple(
-            task for task in self.tasks
-            if (
-                task.initialized and
-                self.proxy.get(task.name).get('start') and not
-                self.proxy.get(task.name).get('finish')
-            )
-        )
-
-    @property
-    def active_processes(self) -> int:
-        return sum(
-            task.processes + (1 if isinstance(task.executor, Process) else 0)
-            for task in self.active_tasks
-        )
-
-    @property
-    def active_threads(self) -> int:
-        return sum(
-            task.threads + 1 if isinstance(task.executor, Thread) else 0
-            for task in self.active_tasks
-        )
-
     def execute(self) -> SchedulerResult:
         self.manager = Manager()
         self.proxy = self.manager.dict()
+        self.worker_handler = WorkerHandler(
+            tasks=self.tasks,
+            proxy=self.proxy,
+            processes=self.processes,
+            threads=self.threads,
+        )
+        self.resource_handler = ResourceHandler(
+            tasks=self.tasks,
+            proxy=self.proxy,
+            system_processor=self.system_processor,
+            system_memory=self.system_memory,
+            graphics_processor=self.graphics_processor,
+            graphics_memory=self.graphics_memory,
+        )
         self.dependency_handler = DependencyHandler(
             tasks=self.tasks,
             proxy=self.proxy,
@@ -89,16 +96,22 @@ class TaskScheduler:
             prerequisites=self.dependency_handler.prerequisites,
         )
         for index, task in enumerate(self.tasks):
-            if not self.enough_workers(task):
+            if not self.worker_handler.enough_workers(task):
                 self.proxy[task.name] = self.manager.dict()
                 task = self.initialize(task, blocked='worker')
+                self.tasks[index] = task
+            if not self.resource_handler.enough_resources(task):
+                self.proxy[task.name] = self.manager.dict()
+                task = self.initialize(task, blocked='resource')
                 self.tasks[index] = task
         while not self.finished:
             for index, task in enumerate(self.tasks):
                 if task.initialized:
                     self.shared_memory_handler.free(index, task)
                     continue
-                if not self.available_worker(task):
+                if not self.resource_handler.enough_resources(task):
+                    continue
+                if not self.worker_handler.available_worker(task):
                     continue
                 if self.dependency_handler.is_blocked(task, status='finish'):
                     continue
@@ -126,7 +139,7 @@ class TaskScheduler:
     def initialize(
         self,
         task: ScheduledTask,
-        blocked: Literal['dependency', 'worker'] = None,
+        blocked: Literal['dependency', 'resource', 'worker'] = None,
     ) -> ScheduledTask:
         full_proxy = self.proxy
         partial_proxy = self.proxy.get(task.name)
@@ -134,6 +147,18 @@ class TaskScheduler:
         if blocked == 'dependency':
             tasks = self.dependency_handler.blocking_tasks(task)
             blocker = {'reason': blocked, 'tasks': tasks}
+        if blocked == 'resource':
+            sp = abs(min(0, self.system_processor - task.system_processor))
+            sm = abs(min(0, self.system_memory - task.system_memory))
+            gp = abs(min(0, self.graphics_processor - task.graphics_processor))
+            gm = abs(min(0, self.graphics_memory - task.graphics_memory))
+            blocker = {
+                'reason': blocked,
+                'system_processor': sp,
+                'system_memory': sm,
+                'graphics_processor': gp,
+                'graphics_memory': gm,
+            }
         if blocked == 'worker':
             processes = 0
             threads = 0
@@ -143,7 +168,11 @@ class TaskScheduler:
             if task.executor.__base__ == Thread:
                 processes = abs(min(0, self.processes - task.processes))
                 threads = abs(min(0, self.threads - (task.threads + 1)))
-            blocker = {'reason': blocked, 'processes': processes, 'threads': threads}
+            blocker = {
+                'reason': blocked,
+                'processes': processes,
+                'threads': threads,
+            }
         function_handler = FunctionHandler(
             name=task.name,
             target=task.target,
@@ -173,26 +202,10 @@ class TaskScheduler:
             priority=task.priority,
             processes=task.processes,
             threads=task.threads,
+            system_processor=task.system_processor,
+            system_memory=task.system_memory,
+            graphics_processor=task.graphics_processor,
+            graphics_memory=task.graphics_memory,
             continual=task.continual,
             initialized=True,
-        )
-
-    def enough_workers(self, task: ScheduledTask) -> bool:
-        return bool(
-            task.executor.__base__ == Process and
-            task.processes < self.processes
-        ) or bool(
-            task.executor.__base__ == Thread and
-            task.processes < self.processes and
-            task.threads < self.threads
-        )
-
-    def available_worker(self, task: ScheduledTask) -> bool:
-        return bool(
-            task.executor.__base__ == Process and
-            self.active_processes + task.processes < self.processes
-        ) or bool(
-            task.executor.__base__ == Thread and
-            self.active_processes + task.processes < self.processes and
-            self.active_threads + task.threads < self.threads
         )
