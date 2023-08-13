@@ -6,7 +6,7 @@ Embrace expert scheduling techniques to elevate your programming to new heights 
 
 ## Installation
 
-You can install the `parallelism` using pip:
+You can install this package using pip:
 
 ```bash
 pip install parallelism
