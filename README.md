@@ -1,12 +1,12 @@
 # parallelism
 
-The Parallelism library offers a powerful set of tools for managing concurrent task execution using both processes and threads.
-It aims to simplify the development of parallel programs, providing a higher-level interface for distributing tasks across multiple execution units.
-Whether your tasks are CPU-bound or I/O-bound, the Parallelism library facilitates efficient and streamlined parallel processing.
+Unlock advanced task scheduling in Python with `parallelism`.
+Seamlessly coordinate parallel and concurrent execution, optimizing performance while ensuring code integrity.
+Embrace expert scheduling techniques to elevate your programming to new heights of efficiency and responsiveness.
 
 ## Installation
 
-You can install the Parallelism library using pip:
+You can install the `parallelism` using pip:
 
 ```bash
 pip install parallelism
