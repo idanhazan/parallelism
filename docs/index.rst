@@ -1,9 +1,10 @@
 parallelism
 ==========
 
-Experience efficient and parallel task execution using processes and threads with the Parallelism library.
-Seamlessly distribute tasks, optimize CPU-bound and I/O-bound operations, and ensure resource-efficient management.
-Elevate your code's performance by leveraging the library's flexible framework, enabling streamlined computation, adaptive responsiveness, and optimal resource allocation for diverse workloads.
+The `Parallelism` library empowers developers with precise control over parallel and concurrent task execution through its core functions: `scheduled_task` and `task_scheduler`.
+The `scheduled_task` function allows users to define, prioritize, and manage individual tasks, seamlessly harnessing the benefits of parallelism and concurrency.
+On the other hand, the `task_scheduler` function offers a high-level approach to orchestrating multiple tasks, efficiently distributing them across processes and threads while optimizing resource utilization.
+With these functions, the `Parallelism` library simplifies the creation of efficient and responsive Python applications, facilitating both parallel and concurrent execution paradigms.
 
 Information
 -----------
