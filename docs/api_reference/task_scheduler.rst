@@ -114,7 +114,7 @@ Examples
    from multiprocessing import Process
    from threading import Thread
 
-   # Third-party packages
+   # Third-party libraries
    from parallelism import scheduled_task, task_scheduler
 
 Code flow
